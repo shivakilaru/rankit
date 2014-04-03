@@ -49,7 +49,7 @@ $(document).ready(function(){
 		console.log("Removing " + $(this).parent().text() );
 		$(this).parent().remove();
 
-		if ( $('#option-list').children().length > 1 ) {
+		if ( $('#option-list').children().length < 2 ) {
 			$('#go-rank').removeClass('clickable');
 		}
 	});
