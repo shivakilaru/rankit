@@ -5,9 +5,6 @@
 	<head> 
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="title" content="	<-------TITLE------->	" />
-		<meta name="description" content="	<-------DESCRIPTION------->	" />
-		<meta name="keywords" content="	<-------KEYWORDS------->	" />
 
 		<title>RankIt</title> 
 
@@ -15,25 +12,88 @@
 
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
 		<link rel="stylesheet" type="text/css" href="css/text.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
-		<script src="js/test-script.js"></script>
-
-		<!-- MIXPANEL ANALYTICS -->
-		<!-- MIXPANEL ANALYTICS -->
+		<script src="js/rankit.js"></script>
 
 	</head>
 	
 	<body>
 	
+		<div class="main-container">
+			
+			<div class="top-bar">
+
+				<div class="logo">
+					<h2>Rankit</h2>
+				</div>
+
+				<ul class="navigation">
+					<li>Browse</li>
+					<li>My Rankits</li>
+					<li>New Rankit</li>
+				</ul>
+
+			</div>
+
+			<hr/>
+
+			<div class="content-container">
+				
+				<!-- Screen 1: Adding Options and Factors -->
+				<div id="new-rank-screen-1">
+
+					<div class="explanation">
+						Rankit helps you make a decision. On the left, enter the options you’re trying to decide between, and on the right, enter the factors you’re judging them by. Weight the factors if necessary. Then press “Rank!”
+					</div>
+
+					<div class="add-options">
+
+						<h2>Options</h2>
+
+						<input type="text" id="option-box" name="option"/>
+						<a id="submit-option">+</a>
+
+						<h4 class="list-header">Current List</h4>
+						<ul id="option-list">
+
+						</ul>
 
 
-		<div>
-			RankIt
+					</div>
+
+					<div class="add-factors">
+
+						<h2>Factors</h2>
+
+						<input type="text" id="factor-box" name="factor"/>
+						<a id="submit-factor">+</a>
+
+						<h4 class="list-header">Current List</h4>
+						<ul id="factor-list">
+
+						</ul>
+
+					</div>
+
+					<div id="go-rank">
+						Rank!
+					</div>
+
+				</div>
+
+
+				<!-- Screen 2: Ranking -->
+				<div id="new-rank-screen-2">
+
+				</div>
+
+
+			</div>
+
 		</div>	
-		
-
 
 	</body>
 	

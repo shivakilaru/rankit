@@ -1,0 +1,156 @@
+/* Rankit Project */
+/* EECS 493 W'14 */
+
+body {
+	transition: all 0.7s;
+  	-webkit-transition: all 0.7s;
+}
+
+li {
+	list-style-type: none;
+}
+
+.main-container {
+	margin-top: 30px;
+	width: 960px;
+	margin: 0 auto;
+}
+
+
+
+
+/* ===== Navigation ===== */
+
+.top-bar {
+	margin-top: 50px;
+	height: 60px;	
+}
+
+.logo {
+	float: left;
+}
+
+ul.navigation {
+	float: right;
+}
+
+.navigation > li {
+	float: left;
+}
+
+
+
+
+/* ===== Adding Options & Factors ===== */
+
+.add-options, .add-factors {
+	width: 48%;
+	margin-top: 40px;
+	float: left;
+	min-height: 400px;
+}
+
+.add-factors {
+	margin-left: 4%;
+}
+
+.add-options > h2, .add-factors > h2 {
+	margin-bottom: 10px;
+}
+
+#option-box, #factor-box {
+	font-size: 18px;
+	width: 1000px;
+	max-width: 88%;
+	font-family: "Helvetica", "Arial", sans-serif;
+	background-color: #E0E0E0;
+	border: none;
+	border-radius: 4px;
+	padding: 10px;
+	box-sizing: border-box;
+	height: 40px;
+}
+
+#option-box:focus, #factor-box:focus {
+	outline: 4px solid #BCBCBC;
+}
+
+.list-header {
+	font-size: 14px;
+	text-transform: uppercase;
+	margin: 15px 0 5px 5px;
+}
+
+#option-list, #factor-list  {
+
+}
+
+#option-list > li, #factor-list > li {
+	margin-left: 0px;
+	font-size: 18px;
+	padding: 5px;
+	width: 85%;
+}
+
+#option-list > li:hover, #factor-list > li:hover {
+	background-color: #EEE;
+}
+
+#option-list > li:hover .delete-option, #factor-list > li:hover .delete-factor {
+	display: block;
+}
+
+.delete-option, .delete-factor {
+	display: none;
+	width: 25px;
+	height: 25px;
+	float: right;
+	background-image: url('../img/close-icon.png');
+	background-size: 80%;
+	background-position: center center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+#submit-option, #submit-factor {
+	border-radius: 100%;
+	display: block;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	line-height: 35px;
+	font-weight: bold;
+	font-size: 30px;
+	color: white;
+	float: right;
+	user-select: none;
+	-webkit-user-select: none;
+	background-color: #1DAB0A;
+	cursor: pointer;
+}
+
+
+/* ===== Rank Button ===== */
+#go-rank {
+	width: 200px;
+	height: 50px;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #BCBCBC;
+	clear: both;
+	color: white;
+	cursor: pointer;
+	line-height: 50px;
+	user-select: none;
+	-webkit-user-select: none;
+	transition: all 0.7s;
+  	-webkit-transition: all 0.7s;
+}
+
+#go-rank.clickable {
+	background-color: #1DAB0A;
+	cursor: pointer;
+}
