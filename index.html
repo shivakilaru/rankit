@@ -44,8 +44,8 @@
 
 			<div class="content-container">
 			
-				<!-- Screen 1: Adding Options and Factors -->
-				<div id="new-rank-screen-1">
+				<!-- Screen 1: "Add UI" -Adding Options and Factors -->
+				<div id="add-ui">
 
 					<div class="explanation">
 						Rankit helps you make a decision. On the left, enter the options you’re trying to decide between, and on the right, enter the factors you’re judging them by. Weight the factors if necessary. Then press “Rank!”
@@ -92,9 +92,39 @@
 
 
 
-				<!-- Screen 2: Ranking -->
-				<div id="new-rank-screen-2">
+				<!-- Screen 2: "Compare UI" - Comparisons -->
+				<div id="compare-ui">
 
+					<h2 id="question">
+						Which is better in terms of
+						<a id="decision-factor">
+							Special Attack?
+						</a>
+					</h2>
+
+					<div id="choices">					
+						<div id="choice-1" class="choice">
+							Mewtwo
+						</div>
+
+						<div id="choice-2" class="choice">
+							Mew
+						</div>
+					</div>
+
+					<br/>
+
+					<a id="skip-to-results">Skip to Results</a>
+
+				</div>
+
+
+				<!-- Screen 3: "Results UI" - Results -->
+				<div id="results-ui">
+
+					<ul id="ranked-results">
+					</ul>
+					
 				</div>
 
 
