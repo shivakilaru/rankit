@@ -27,7 +27,7 @@
 			<div class="top-bar">
 
 				<div class="logo">
-					<h2>Rankit</h2>
+					<a href="index.html"><h2>Rankit</h2></a>
 				</div>
 
 				<ul class="navigation">
@@ -40,8 +40,10 @@
 
 			<hr/>
 
+
+
 			<div class="content-container">
-				
+			
 				<!-- Screen 1: Adding Options and Factors -->
 				<div id="new-rank-screen-1">
 
@@ -54,11 +56,13 @@
 						<h2>Options</h2>
 
 						<input type="text" id="option-box" name="option"/>
-						<a id="submit-option">+</a>
+						<a id="submit-option"></a>
 
 						<h4 class="list-header">Current List</h4>
 						<ul id="option-list">
-
+							<li id="option-item">Charmander<a class="delete-option"></a></li>
+							<li id="option-item">Bulbasaur<a class="delete-option"></a></li>
+							<li id="option-item">Squirtle<a class="delete-option"></a></li>
 						</ul>
 
 
@@ -69,20 +73,23 @@
 						<h2>Factors</h2>
 
 						<input type="text" id="factor-box" name="factor"/>
-						<a id="submit-factor">+</a>
+						<a id="submit-factor"></a>
 
 						<h4 class="list-header">Current List</h4>
 						<ul id="factor-list">
-
+							<li id="factor-item">Speed<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
+							<li id="factor-item">Defense<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
+							<li id="factor-item">Attack<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
 						</ul>
 
 					</div>
 
-					<div id="go-rank">
+					<div id="go-rank" class="clickable">
 						Rank!
 					</div>
 
 				</div>
+
 
 
 				<!-- Screen 2: Ranking -->

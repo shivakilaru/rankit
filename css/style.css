@@ -6,6 +6,11 @@ body {
   	-webkit-transition: all 0.7s;
 }
 
+a {
+	text-decoration: none;
+	color: black;
+}
+
 li {
 	list-style-type: none;
 }
@@ -81,8 +86,7 @@ ul.navigation {
 	margin: 15px 0 5px 5px;
 }
 
-#option-list, #factor-list  {
-
+#option-list, #factor-list {
 }
 
 #option-list > li, #factor-list > li {
@@ -90,6 +94,7 @@ ul.navigation {
 	font-size: 18px;
 	padding: 5px;
 	width: 85%;
+	position: relative;
 }
 
 #option-list > li:hover, #factor-list > li:hover {
@@ -102,9 +107,11 @@ ul.navigation {
 
 .delete-option, .delete-factor {
 	display: none;
+	position: absolute;
 	width: 25px;
 	height: 25px;
-	float: right;
+	right: 4px;
+	top: 5px;
 	background-image: url('../img/close-icon.png');
 	background-size: 80%;
 	background-position: center center;
@@ -112,21 +119,29 @@ ul.navigation {
 	cursor: pointer;
 }
 
+.factor-slider {
+	float: right;
+	margin-right: 35px;
+	margin-top: 7px;
+}
+
 #submit-option, #submit-factor {
 	border-radius: 100%;
 	display: block;
 	width: 40px;
 	height: 40px;
-	text-align: center;
-	line-height: 35px;
-	font-weight: bold;
-	font-size: 30px;
-	color: white;
+	background-image: url('../img/add-icon.png');
+	background-size: 100%;
+	background-position: center center;
+	background-repeat: no-repeat;
 	float: right;
 	user-select: none;
 	-webkit-user-select: none;
-	background-color: #1DAB0A;
 	cursor: pointer;
+}
+
+#submit-option:hover, #submit-factor:hover {
+	background-image: url('../img/add-icon-2.png');
 }
 
 
