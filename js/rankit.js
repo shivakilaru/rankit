@@ -22,6 +22,7 @@ $(document).ready(function(){
 	var factorList = new Array();
 	var decisions = new Array();
 	var scores = {};
+	var finalScores = {};
 	var decisionCount = 0;
 	var choice1, choice2;
 	var decisionFactor;
@@ -174,6 +175,7 @@ $(document).ready(function(){
 	function presentNewDecision() {
 		// Have all decisions been made?
 		if (decisions.length == maxDecisions()) {
+			displayResult();
 			displayResults();
 			$("#compare-ui").hide('slow');
 			$("#results-ui").show('slow');
@@ -245,6 +247,7 @@ $(document).ready(function(){
 		$("#compare-ui").hide('slow');
 		$("#results-ui").show('slow');
 		displayResults();
+		displayResult();
 	});
 
 
@@ -271,19 +274,60 @@ $(document).ready(function(){
 			sum += parseFloat(scores[option][factor]) * parseFloat(factorList[f]['weight']);
 		}
 		console.log(option + "'s total score is " + sum);
+		finalScores[option] = sum;
 		return sum;
 	}
 
 	function displayResults() {
 		for (var i = 0; i < optionList.length; i++) {
-			var appendString = ("<li class='result'>" + 
+			var appendString = ("<li class='results'>" + 
 				optionList[i] + ": " + 
 				getTotalScore(optionList[i]) + "</li>");
 			$('#ranked-results').append(appendString);
 		}
 	}
 
+	function displayResult() {
+		var winner;
+		var winnerScore = 0;
+		for (var i = 0; i < optionList.length; i++) {
+			getTotalScore(optionList[i]);
+			if (finalScores[optionList[i]] > winnerScore) {
+				winner = optionList[i];
+				winnerScore = finalScores[optionList[i]];
+			} 
+		}
+		$("#result").text(winner);
+	}
 
+	//Note from Desmond to Desmond:
+	//This function creates an entry in the breakdown list
+	//Right now you're trying to figure out how to quantify
+	//the amount of shading in the breakdown graph
+	//As of now each factor should show up properly
+	// function createBreakdown() {
+	// 	for (var i=0; i < optionList.length; i++) {
+	// 		var rowString = 
+	// 		"	<div class = 'option-row'>
+	// 				<div class = 'option-name-wrapper'>
+	// 					<div class = 'option-name'>" + optionList[i] + "</div>
+	// 				</div>
+	// 				<div class = 'factor-graph'>";
+	// 		for (f in factorList) {
+	// 			var factorScore = scores[option][factorList[f]['name']];
+	// 			rowString += 
+	// 				"		<div id = 'factor-'"+f+" class = 'factor'></div>
+	// 					</div>
+	// 				</div>";
+	// 		}	
+	// 	}
+	// }
+
+//This is supposed to take user back to decisions
+//BUT IT DOES NOT WORK--please help
+$('#finish-ranking').click(function() {
+		presentNewDecision();
+	});
 
 
 
