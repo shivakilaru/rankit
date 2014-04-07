@@ -27,7 +27,7 @@
 			<div class="top-bar">
 
 				<div class="logo">
-					<a href="index.html"><h2>Rankit</h2></a>
+					<a href="index.html"><h1>Rankit</h1></a>
 				</div>
 
 				<ul class="navigation">
@@ -95,32 +95,40 @@
 				<!-- Screen 2: "Compare UI" - Comparisons -->
 				<div id="compare-ui">
 
-					<h2 id="question">
+					<div id="question">
 						Which is better in terms of
 						<a id="decision-factor">
 							Special Attack?
 						</a>
-					</h2>
+					</div>
 
 					<div id="choices">					
+						
 						<div id="choice-1" class="choice">
-							Mewtwo
 						</div>
 
 						<div id="choice-2" class="choice">
-							Mew
 						</div>
+
 					</div>
 
 					<br/>
 
-					<a id="skip-to-results">Skip to Results</a>
-
+					<div id = "progress">
+						<div id = "progress-message"></div>
+						<a id="skip-to-results">Skip to Results</a>
+						<div id = "progressbar-container">
+							<div id = "progress-bar"></div>
+						</div>
+					</div>
 				</div>
 
 
 				<!-- Screen 3: "Results UI" - Results -->
 				<div id="results-ui">
+
+					<div class = "result-subheading">Optimal Decision:</div>
+					<div id = "result"></div>
 
 					<ul id="ranked-results">
 					</ul>

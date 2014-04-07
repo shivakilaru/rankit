@@ -22,6 +22,7 @@ $(document).ready(function(){
 	var factorList = new Array();
 	var decisions = new Array();
 	var scores = {};
+	var decisionCount = 0;
 	var choice1, choice2;
 	var decisionFactor;
 
@@ -188,6 +189,11 @@ $(document).ready(function(){
 				j = Math.floor(Math.random() * optionList.length);
 			}
 			var k = Math.floor(Math.random() * factorList.length);
+			
+			var progressPercentage = Math.round(100*(decisionCount/maxDecisions()));
+			var progressMessage = decisionCount + " comparisons made. Decision " +
+			"is " + progressPercentage + "% certain.";
+
 
 			choice1 = optionList[i];
 			choice2 = optionList[j];
@@ -197,11 +203,14 @@ $(document).ready(function(){
 		var decisionString = (choice1 + "." + choice2 + "." + decisionFactor);
 		console.log("New decision presented: " + decisionString);
 		decisions.push(decisionString);
+		decisionCount++;
 
 		$("#choice-1").text(choice1);
 		$("#choice-2").text(choice2);
 		$("#decision-factor").text(decisionFactor+"?");
 		$("#choices").show('fast');
+		$("#progress-message").text(progressMessage);
+		$("#progress-bar").width(progressPercentage+"%");
 	}
 
 	// Take 25% of loser's current factor points and give them to the winner.
