@@ -288,11 +288,128 @@ ul.navigation {
 ================================================== */
 
 #result {
-	margin-left: 0px;
+	font-size: 90px;
+	font-weight: 900;
+	color: #686868;
+	line-height: 90px;
+	display: inline;
 }
 
-.result-subheading{
-	font-size: 28px;
+.result-subheading {
+	font-size: 30px;
 	font-weight: 300;
 	color: #5E5E5E;
+}
+
+.result-small {
+	font-size: 14px;
+	color: #5E5E5E;
+}
+
+#certainty-container {
+	margin-top: 13px;
+	display: inline;
+	float: right;
+}
+
+#certainty{
+	float: right;
+	display: block;
+}
+
+#certainty-percentage {
+	float: right;
+	font-size: 50px;
+	font-weight: 900;
+	color: #686868;
+	line-height: 50px;
+	display: block;	
+}
+
+#breakdown-container {
+	height: auto;
+	margin-top: 5px;
+	clear: both;
+	overflow: hidden;
+}
+
+#row-container {
+	display: inline;
+	height: auto;
+	overflow: hidden;
+	width: 75%;
+	float: left;
+}
+
+.option-row {
+	display: inline;
+	float: left;
+	height: 30px;
+	width: 100%;
+	margin-top: 10px;
+}
+
+.option-name-wrapper {
+	display: inline;	
+	width: 31%;
+	float: left;
+	margin-right: 17px;
+}
+
+.option-name {
+	font-size: 24px;
+	font-weight: bold;
+	color: #686868;
+	float: right;
+	margin-right: 11px;
+}
+
+.factor-graph {
+	display: inline;
+	width: 65%;
+	float: left;
+	height: 30px;
+}
+
+.factor {
+	display: inline;
+	background-color: black;
+	width:100%;
+	float: left;
+	height: 30px;
+}
+
+#factor-key {
+	width: 20%;
+	display: inline;
+	float: right;
+	margin-top: 10px;
+}
+
+.factor-color {
+	display: inline;
+	height: 30px;
+	float: left;
+	background-color: black;
+	width: 16%;
+	margin-left: 20px;
+}
+
+.factor-name {
+	display: inline;
+	font-size: 18px;
+	color: #5E5E5E;
+	width: 97%;
+	margin-left: 10px;
+}
+
+#completion-message {
+	margin-top: 40px;
+}
+
+#finish-ranking {
+	cursor: pointer;
+	color: #5E5E5E;
+	font-size: 14px;
+	text-decoration: underline;
 }
