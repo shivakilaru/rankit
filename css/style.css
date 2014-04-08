@@ -38,7 +38,7 @@ li {
 ===================================================== */
 
 .top-bar {
-	margin-top: 50px;
+	margin-top: 25px;
 	height: 60px;	
 }
 
@@ -48,6 +48,7 @@ li {
 
 ul.navigation {
 	float: right;
+	margin-top: 10px;
 }
 
 .navigation > li {
@@ -431,6 +432,7 @@ ul.navigation {
 #graph {
 	margin-top: 30px;
 	margin-left: -8px;
+	padding: 20px;
 }
 
 .graphFieldgraph {

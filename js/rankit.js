@@ -381,7 +381,7 @@ $(document).ready(function(){
 				data: dataset,
 				colors: colors,
 				width: 960,
-				height: 400,
+				height: 350,
 				legendWidth: 200,
 				showValues: false,
 			});
@@ -394,7 +394,7 @@ $(document).ready(function(){
 				legends: factorNames,
 				legend: true,
 				width: 960,
-				height: 400,
+				height: 350,
 				legendWidth: 200,
 				showValues: false,
 		 	});
