@@ -20,12 +20,21 @@ $(document).ready(function(){
 
 	var optionList = new Array();
 	var factorList = new Array();
+	var noFactors = true;
+
+	// @TODO-1: refactor this so we don't need 2 arrays of factors
+	var factorNames = new Array();
+
 	var decisions = new Array();
+	var decisionCount = 0;
+
 	var scores = {};
 	var finalScores = {};
-	var decisionCount = 0;
+
 	var choice1, choice2;
 	var decisionFactor;
+
+	var progressPercentage;
 
 
 
@@ -144,8 +153,22 @@ $(document).ready(function(){
 			var factorInList = new Object();
 			factorInList["name"] = factorText;
 			factorInList["weight"] = factorWeight;
+			// @TODO-1
+			factorNames.push(factorText);
 			factorList.push(factorInList);
 		}
+
+		// Are there factors present?
+		if (factorList > 0) {
+			noFactors = false;
+		}
+		// If not, create a "shadow" factor to make the code work.
+		else {
+			$('#question').text("Which of these is better?");
+			var defaultFactor = {"name":'default', "weight":'1'};
+			factorList.push(defaultFactor);
+		}
+
 		// Make factor weights sum to 0.
 		normalizeWeights();
 		// Print options, factors, and scores to console.
@@ -174,8 +197,7 @@ $(document).ready(function(){
 
 	function presentNewDecision() {
 		// Have all decisions been made?
-		if (decisions.length == maxDecisions()) {
-			displayResult();
+		if (decisionCount == maxDecisions()) {
 			displayResults();
 			$("#compare-ui").hide('slow');
 			$("#results-ui").show('slow');
@@ -192,7 +214,7 @@ $(document).ready(function(){
 			}
 			var k = Math.floor(Math.random() * factorList.length);
 			
-			var progressPercentage = Math.round(100*(decisionCount/maxDecisions()));
+			progressPercentage = Math.round(100*(decisionCount/maxDecisions()));
 			var progressMessage = decisionCount + " comparisons made. Decision " +
 			"is " + progressPercentage + "% certain.";
 
@@ -247,7 +269,6 @@ $(document).ready(function(){
 		$("#compare-ui").hide('slow');
 		$("#results-ui").show('slow');
 		displayResults();
-		displayResult();
 	});
 
 
@@ -279,26 +300,118 @@ $(document).ready(function(){
 	}
 
 	function displayResults() {
+		// Clear old data
+		$('#result').empty();
+		$('#ranked-results').empty();
+		$('#certainty-val').empty();
+
+		// Compute and display updated data
+		var winner;
+		var winnerScore = 0;
 		for (var i = 0; i < optionList.length; i++) {
 			var appendString = ("<li class='results'>" + 
 				optionList[i] + ": " + 
 				getTotalScore(optionList[i]) + "</li>");
 			$('#ranked-results').append(appendString);
 		}
-	}
-
-	function displayResult() {
-		var winner;
-		var winnerScore = 0;
 		for (var i = 0; i < optionList.length; i++) {
-			getTotalScore(optionList[i]);
 			if (finalScores[optionList[i]] > winnerScore) {
 				winner = optionList[i];
 				winnerScore = finalScores[optionList[i]];
 			} 
 		}
 		$("#result").text(winner);
+		$('#certainty-val').text(progressPercentage);
+
+		if (decisionCount == maxDecisions()) {
+			$('#finish-ranking').hide();
+		}
+
+		displayGraph();
 	}
+
+	function displayGraph() {
+		// Clear old graph
+		$('#graph').empty();
+
+		// Construct dataset
+		dataset = new Array();
+		for (o in optionList) {
+			var option = optionList[o];
+			var entry = new Array();
+			var entryFactorScores = new Array();
+			for (f in factorList) {
+				var factor = factorList[f]['name'];
+				entryFactorScores.push(Math.floor(scores[option][factor]*factorList[f]['weight']));
+			}
+			entry.push(entryFactorScores);
+			entry.push(option);
+			console.log(entry);
+			dataset.push(entry);
+		}
+
+		// Construct colors array
+		var colors = new Array();
+		for (f in factorList) {
+			switch (f%6) {
+				case (0):
+					colors.push('#282828');
+					break;
+				case (1):
+					colors.push('#494949');
+					break;
+				case (2):
+					colors.push('#6b6b6b');
+					break;
+				case (3):
+					colors.push('#999999');
+					break;
+				case (4):
+					colors.push('#cecece');
+					break;
+				default:
+					colors.push('#efefef');
+					break;
+			}
+		}
+
+		if (noFactors) {
+			// Plain graph
+			$("#graph").jqBarGraph({
+				data: dataset,
+				colors: colors,
+				width: 960,
+				height: 400,
+				legendWidth: 200,
+				showValues: false,
+			});
+		} 
+		else {
+			// Stacked graph
+			$("#graph").jqBarGraph({
+				data: dataset,
+				colors: colors,
+				legends: factorNames,
+				legend: true,
+				width: 960,
+				height: 400,
+				legendWidth: 200,
+				showValues: false,
+		 	});
+		}
+	}
+
+	// When the user clicks "Finish Ranking"
+	$('#finish-ranking').click(function() {
+		if (decisionCount == maxDecisions()) {
+			alert("Ranking is complete.");
+			return;	
+		}
+		presentNewDecision();
+		$("#results-ui").hide('slow');
+		$("#compare-ui").show('slow');
+	});
+
 
 	//Note from Desmond to Desmond:
 	//This function creates an entry in the breakdown list
@@ -322,12 +435,6 @@ $(document).ready(function(){
 	// 		}	
 	// 	}
 	// }
-
-//This is supposed to take user back to decisions
-//BUT IT DOES NOT WORK--please help
-$('#finish-ranking').click(function() {
-		presentNewDecision();
-	});
 
 
 

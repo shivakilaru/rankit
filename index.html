@@ -16,6 +16,7 @@
 		
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
+		<script src="js/jqBarGraph.1.1.min.js"></script>
 		<script src="js/rankit.js"></script>
 
 	</head>
@@ -102,14 +103,14 @@
 						</a>
 					</div>
 
-					<div id="choices">					
-						
-						<div id="choice-1" class="choice">
-						</div>
+					<div class="choice-container">
+						<div id="choices">					
+							<div id="choice-1" class="choice">
+							</div>
 
-						<div id="choice-2" class="choice">
+							<div id="choice-2" class="choice">
+							</div>
 						</div>
-
 					</div>
 
 					<br/>
@@ -124,56 +125,80 @@
 				</div>
 
 
+
 				<!-- Screen 3: "Results UI" - Results -->
 				<div id="results-ui">
+					<div class = "result-subheading">
+						Optimal Decision:
+					</div>
 
-					<div class = "result-subheading">Optimal Decision:</div>
-					<div id = "result"></div>
-					<div id = "certainty-container">
-						<div id = "certainty" class = "result-small">Certainty:</div>
+					<div id="result">
+					</div>
+
+					<div id="certainty-container">
+						<div id="certainty" class="result-small">
+							Certainty:
+						</div>
 						</br>
-						<div id = "certainty-percentage">88%</div>
+						<div id="certainty-percentage">
+							<a id="certainty-val">88</a>%
+						</div>
+						<a id="finish-ranking">
+							Finish Ranking
+						</a>
 					</div>
+
 					</br>
 					</br>
-					<div class = "result-subheading">Breakdown:</div>
-					<div id = "breakdown-container">
-						<div id = "row-container">
-							<div class = "option-row">
-								<div class = "option-name-wrapper">
-									<div class = "option-name">Kanye West</div>
-								</div>
-								<div class = "factor-graph">
-									<div class = "factor"></div>
-								</div>
-							</div>
 
-							<div class = "option-row">
-							<div class = "option-name-wrapper">
-							<div class = "option-name">1234567890123456</div>
-							</div>
-							<div class = "factor-graph">
-							<div class = "factor"></div>
-							</div>
-							</div>
-					</div>
-					<div id = "factor-key">
-						<div class = "factor-color"></div>
-						<div class = "factor-name">lyricism</div>
+					<div class="result-subheading">
+						Breakdown:
 					</div>
 
+					<div id="graph">
+					</div>
+
+					<!-- Desmond graph -->
+<!-- 					<div id="breakdown-container">
+						<div id="row-container">
+							<div class="option-row">
+								<div class="option-name-wrapper">
+									<div class="option-name">
+										Kanye West
+									</div>
+								</div>
+								<div class="factor-graph">
+									<div class="factor">
+									</div>
+								</div>
+							</div>
+
+							<div class="option-row">
+								<div class="option-name-wrapper">
+									<div class="option-name">
+										1234567890123456
+									</div>
+								</div>
+								<div class="factor-graph">
+									<div class="factor">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="factor-key">
+							<div class="factor-color">
+							</div>
+							<div class="factor-name">
+								lyricism
+							</div>
+						</div>
+					</div> -->
 
 				</div>
-				<div id = "completion-message">
-					<a id="finish-ranking">Finish Ranking</a>
-				</div>
-
-			</div>
-
-		</div>	
-
+			</div>	
+		</div>
 	</body>
-	
 </html>
 	
 	

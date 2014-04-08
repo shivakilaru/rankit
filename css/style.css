@@ -214,6 +214,11 @@ ul.navigation {
 	color: #686868;
 }
 
+.choice-container {
+	height: 200px;
+	overflow: hidden;
+}
+
 #choices {
 	margin: 50px auto;
 	line-height: 95px;
@@ -233,6 +238,12 @@ ul.navigation {
 	border-radius: 5px;
 	padding: 30px 80px;
 	margin: 20px;
+	transition: all 0.3s;
+  	-webkit-transition: all 0.3s;
+}
+
+.choice:hover {
+	background-color: #3B3B3B;
 }
 
 #choice1, #choice2 {
@@ -321,9 +332,12 @@ ul.navigation {
 	float: right;
 	font-size: 50px;
 	font-weight: 900;
-	color: #686868;
 	line-height: 50px;
 	display: block;	
+}
+
+#certainty-percentage, #certainty-val {
+	color: #686868;
 }
 
 #breakdown-container {
@@ -403,13 +417,44 @@ ul.navigation {
 	margin-left: 10px;
 }
 
-#completion-message {
-	margin-top: 40px;
-}
-
 #finish-ranking {
 	cursor: pointer;
 	color: #5E5E5E;
 	font-size: 14px;
 	text-decoration: underline;
+	display: block;
+	margin-top: 55px;
+}
+
+
+/* ==== Graph Stuff ==== */
+#graph {
+	margin-top: 30px;
+	margin-left: -8px;
+}
+
+.graphFieldgraph {
+	margin: 0px 50px;
+}
+
+.graphLabelgraph {
+	font-size: 24px;
+	font-weight: bold;
+	padding: 10px 0;
+	color: #686868;
+}
+
+.legendLabelgraph {
+	font-size: 18px;
+	line-height: 35px;
+	font-weight: 300;
+	padding-left: 40px;
+}
+
+#legendHolder2graph {
+	margin-right: -20px;
+}
+
+.graphValuegraph {
+	font-weight: 300;
 }
