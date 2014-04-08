@@ -159,7 +159,7 @@ $(document).ready(function(){
 		}
 
 		// Are there factors present?
-		if (factorList > 0) {
+		if (factorList.length > 0) {
 			noFactors = false;
 		}
 		// If not, create a "shadow" factor to make the code work.
