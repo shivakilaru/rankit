@@ -289,7 +289,6 @@ ul.navigation {
 
 
 
-
 /* ===============================================
     ____                  ____          __  ______
    / __ \___  _______  __/ / /______   / / / /  _/
@@ -458,5 +457,47 @@ ul.navigation {
 }
 
 .graphValuegraph {
+	font-weight: 300;
+}
+
+/* ===============================================
+
+   / /_  _________ _      __________ 
+  / __ \/ ___/ __ \ | /| / / ___/ _ \
+ / /_/ / /  / /_/ / |/ |/ (__  )  __/
+/_.___/_/   \____/|__/|__/____/\___/ 
+
+# is a id
+. is a class
+=============================================== */
+
+.browseBox {
+	width: 160px;
+	height: 125px; 
+	font-size: 12px;
+	font-weight: bold;
+	border-style: solid;
+	border: 1px solid #e0e0e0;  
+	padding: 15px;
+	color: #5C5B5B;
+	display: inline-block;
+	box-shadow: 5px #e0e0e0;
+}
+
+.browseBox-pic{
+	max-height: 100px; 
+	width: 160px;
+}
+
+.browseBox-title{
+	font-size: 14px;
+	height: 17px;
+	overflow: hidden;
+	margin: 0;
+}
+
+
+
+.browseBox-author{
 	font-weight: 300;
 }
