@@ -55,7 +55,15 @@ ul.navigation {
 	float: left;
 }
 
+.login-container {
+	float: right;
+	margin-right: 10px;
+	margin-top: 10px;
+}
 
+#login {
+	cursor: pointer;
+}
 
 
 
