@@ -22,6 +22,8 @@ $(document).ready(function(){
 	var factorList = new Array();
 	var noFactors = true;
 
+	var title;
+
 	// @TODO-1: refactor this so we don't need 2 arrays of factors
 	var factorNames = new Array();
 
@@ -150,6 +152,7 @@ $(document).ready(function(){
 
 	function addItem(type) {
 		var item = $('#'+type+'-box').val();
+		item = item.replace(/^\s+/, '').replace(/\s+$/, '');
 		if (item === "") {
 		}
 		else if (item) {
@@ -228,6 +231,11 @@ $(document).ready(function(){
 	});
 
 	function beginDeciding() {
+		// Get and Print Title
+		title = $('#title-box').val();
+		title = title.replace(/^\s+/, '').replace(/\s+$/, '');
+		document.getElementById("titleComp").innerHTML = title;
+
 		// Clear arrays.
 		optionList = [];
 		factorList = [];
@@ -401,6 +409,9 @@ $(document).ready(function(){
 		$('#result').empty();
 		$('#ranked-results').empty();
 		$('#certainty-val').empty();
+
+		// Print Title
+		document.getElementById("titleResult").innerHTML = title;
 
 		// Compute and display updated data
 		var winner;
