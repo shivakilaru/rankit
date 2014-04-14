@@ -107,6 +107,10 @@ ul.navigation {
 	height: 40px;
 }
 
+#title-box {
+	max-width: 42%;
+}
+
 #title-box:focus, #option-box:focus, #factor-box:focus {
 	outline: 4px solid #BCBCBC;
 }
@@ -212,11 +216,31 @@ ul.navigation {
 
 =========================================================== */
 
+#title-wrapper{
+	height: 40px;
+}
+
+#yourRankit {
+	display: inline;
+	float: inline;
+	height:40px;
+}
+
+#titleComp {
+	display: inline;
+	color: black;
+	height:40px;
+	font-size: 30px;
+	font-weight: 700;
+	margin-left: 5px;
+}
+
 #question {
 	text-align: center;
 	font-size: 24px;
 	font-weight: 300;
 	color: #5E5E5E;
+	margin-top: 40px;
 }
 
 #decision-factor {
@@ -309,7 +333,7 @@ ul.navigation {
                                                   
 ================================================== */
 
-#result {
+.heading {
 	font-size: 90px;
 	font-weight: 900;
 	color: #686868;
@@ -317,7 +341,7 @@ ul.navigation {
 	display: inline;
 }
 
-.result-subheading {
+.subheading {
 	font-size: 30px;
 	font-weight: 300;
 	color: #5E5E5E;
