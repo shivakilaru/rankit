@@ -235,6 +235,7 @@ $(document).ready(function(){
 		title = $('#title-box').val();
 		title = title.replace(/^\s+/, '').replace(/\s+$/, '');
 		document.getElementById("titleComp").innerHTML = title;
+		
 
 		// Clear arrays.
 		optionList = [];

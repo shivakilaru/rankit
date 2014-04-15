@@ -216,23 +216,31 @@ ul.navigation {
 
 =========================================================== */
 
-#title-wrapper{
-	height: 40px;
+.title-wrapper{
+	height: 30px;
+			margin-bottom: 15px;
+
 }
 
-#yourRankit {
+.yourRankit {
 	display: inline;
 	float: inline;
-	height:40px;
+	height:30px;
+	font-size: 20px;
+	font-weight: 300;
+	color: #5E5E5E;
+			margin-bottom: 15px;
+
 }
 
 #titleComp {
 	display: inline;
 	color: black;
-	height:40px;
-	font-size: 30px;
+	height:30px;
+	font-size: 20px;
 	font-weight: 700;
 	margin-left: 5px;
+		margin-bottom: 15px;
 }
 
 #question {
@@ -333,6 +341,16 @@ ul.navigation {
                                                   
 ================================================== */
 
+#titleResult {
+	display: inline;
+	color: black;
+	height:30px;
+	font-size: 20px;
+	font-weight: 700;
+	margin-left: 5px;
+	margin-bottom: 15px;
+}
+
 .heading {
 	font-size: 90px;
 	font-weight: 900;
@@ -342,6 +360,12 @@ ul.navigation {
 }
 
 .subheading {
+	font-size: 30px;
+	font-weight: 300;
+	color: #5E5E5E;
+}
+
+.result-subheading {
 	font-size: 30px;
 	font-weight: 300;
 	color: #5E5E5E;
