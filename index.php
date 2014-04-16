@@ -2,6 +2,13 @@
 
 <html> 
 
+<?php
+	if (isset($_POST['cat'])){
+		echo $_POST['cat'];
+	}
+?>
+
+
 	<head> 
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -31,7 +38,7 @@
 			<div class="top-bar">
 
 				<div class="logo">
-					<a href="index.html"><h1>Rankit</h1></a>
+					<a href="index.php"><h1>Rankit</h1></a>
 				</div>
 
 				<ul class="navigation">
@@ -60,15 +67,11 @@
 					</div>
 
 					<div class="get-title">
-
 						<h2>Title</h2>
-
-						<input type="text" maxlength=60 id="title-box" name="title" value=
+					<input type="text" id="title-box" name="title" value=
 						"Pokemon"/>
 
-
 					</div>
-
 
 					<div class="add-options">
 
@@ -114,10 +117,11 @@
 				<!-- Screen 2: "Compare UI" - Comparisons -->
 				<div id="compare-ui">
 
-					<div class= "title-wrapper">
-						<div class = "yourRankit">Your Rankit:</div>
+					<div id= "title-wrapper">
+						<div class = "result-subheading" id="yourRankit">Your Rankit:</div>
 						<div id="titleComp"></div>
 					</div>
+
 					<div id="question">
 						Which is better in terms of
 						<a id="decision-factor">
@@ -150,16 +154,17 @@
 
 				<!-- Screen 3: "Results UI" - Results -->
 				<div id="results-ui">
-					<div class= "title-wrapper">
-						<div class = "yourRankit">Your Rankit:</div>
-						<div id="titleResult"></div>
+					<div id= "title-wrapper">
+						<div class = "result-subheading" id="yourRankit">Your Rankit:</div>
+						<div id="titleComp">Pokemon</div>
 					</div>
 
-					<div class = "subheading">
+					<div class = "result-subheading">
 						Optimal Decision:
 					</div>
 
-					<div id="result" class="heading"></div>
+					<div id="result">
+					</div>
 
 					<div id="certainty-container">
 						<div id="certainty" class="result-small">
@@ -184,43 +189,10 @@
 					<div id="graph">
 					</div>
 
-					<!-- Desmond graph -->
-<!-- 					<div id="breakdown-container">
-						<div id="row-container">
-							<div class="option-row">
-								<div class="option-name-wrapper">
-									<div class="option-name">
-										Kanye West
-									</div>
-								</div>
-								<div class="factor-graph">
-									<div class="factor">
-									</div>
-								</div>
-							</div>
-
-							<div class="option-row">
-								<div class="option-name-wrap">
-									<div class="option-name">
-										1234567890123456
-									</div>
-								</div>
-								<div class="factor-graph">
-									<div class="factor">
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div id="factor-key">
-							<div class="factor-color">
-							</div>
-							<div class="factor-name">
-								lyricism
-							</div>
-						</div>
-					</div> -->
-
+						<form id = "rank-action-container">
+							<input type="submit" id="save-rank" class="button" name="save-rank" value="Save">
+							<input type="submit" id="share-rank" class="button" name="share-rank" value="Share">
+						</form>
 				</div>
 			</div>	
 		</div>

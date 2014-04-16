@@ -22,8 +22,6 @@ $(document).ready(function(){
 	var factorList = new Array();
 	var noFactors = true;
 
-	var title;
-
 	// @TODO-1: refactor this so we don't need 2 arrays of factors
 	var factorNames = new Array();
 
@@ -38,7 +36,7 @@ $(document).ready(function(){
 
 	var winnerResult;
 	var progressPercentage;
-
+	var title;
 
 
 
@@ -160,7 +158,6 @@ $(document).ready(function(){
 
 	function addItem(type) {
 		var item = $('#'+type+'-box').val();
-		item = item.replace(/^\s+/, '').replace(/\s+$/, '');
 		if (item === "") {
 		}
 		else if (item) {
@@ -569,7 +566,7 @@ $(document).ready(function(){
 
 		//Store important variables to recreate Rankit
 		var xmlhttp = new XMLHttpRequest();
-		var url = 	'db-handler.php'
+		var url = 	'db-handler.php';
 		var vars = 	'winner='+winnerResult+
 						'&progressPercentage='+progressPercentage+
 						'&optionStr='+optionStr+
@@ -582,8 +579,6 @@ $(document).ready(function(){
 		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xmlhttp.send(vars);
 	});
-
-
 
 
 	/* ==========================

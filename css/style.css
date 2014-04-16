@@ -15,12 +15,6 @@ li {
 	list-style-type: none;
 }
 
-input[type="submit"] {
-	-webkit-appearance: none;
-	box-sizing: none;
-}
-
-
 .main-container {
 	margin-top: 30px;
 	width: 960px;
@@ -97,7 +91,7 @@ ul.navigation {
 	margin-left: 4%;
 }
 
-.get-title > h2, .add-options > h2, .add-factors > h2 {
+.getTitle > h2, .add-options > h2, .add-factors > h2 {
 	margin-bottom: 10px;
 }
 
@@ -223,7 +217,7 @@ ul.navigation {
 
 =========================================================== */
 
-.title-wrapper{
+#title-wrapper{
 	height: 40px;
 }
 
@@ -235,11 +229,10 @@ ul.navigation {
 #titleComp {
 	display: inline;
 	color: black;
-	height:30px;
-	font-size: 20px;
+	height:40px;
+	font-size: 30px;
 	font-weight: 700;
 	margin-left: 5px;
-		margin-bottom: 15px;
 }
 
 #question {
@@ -340,7 +333,7 @@ ul.navigation {
                                                   
 ================================================== */
 
-.heading {
+#result {
 	font-size: 90px;
 	font-weight: 900;
 	color: #686868;
@@ -350,12 +343,6 @@ ul.navigation {
 
 .result-subheading {
 	margin-top: 30px;
-	font-size: 30px;
-	font-weight: 300;
-	color: #5E5E5E;
-}
-
-.result-subheading {
 	font-size: 30px;
 	font-weight: 300;
 	color: #5E5E5E;
@@ -484,17 +471,14 @@ ul.navigation {
 
 .button {
 	width: 200px;
-	height: 50px;
+	height: 70px;
 	text-align: center;
 	margin: 0px 5px 0px 5px;
 	font-size: 24px;
 	font-weight: bold;
 	border-radius: 5px;
-	background-color: #BCBCBC;
 	color: white;
 	line-height: 50px;
-	position: relative;
-	padding: 20px 60px;
 }
 
 #save-rank {

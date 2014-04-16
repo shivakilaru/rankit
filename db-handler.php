@@ -67,31 +67,32 @@ while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
 if (isset($_POST['winner']) && isset($_POST['progressPercentage']) && 
 	isset($_POST['optionStr']) && isset($_POST['factorNames']) && 
 	isset($_POST['factorWeights']) && isset($_POST['scoreString']) &&
-	isset($_POST['finalScoreStr']))
+	isset($_POST['finalScoreStr'])) 
 {
 	//$query_sql = $pdo->query("SELECT id FROM users WHERE id ")
 
-	$sql = "INSERT INTO rankit (date, winner, progress_percentage, options, 
-		factor_names, factor_weights, scores, final_scores) 
-		VALUES (:date, :winner,. :progressPercentage, :options, :factor_names, 
-		:factor_weights, :scores, :final_scores)";
+	$sql = 	"INSERT INTO rankit (date, winner, progress_percentage,options, 
+				factor_names, factor_weights, scores, final_scores) 
+				VALUES (:date, :winner, :progressPercentage, :options, 
+				:factor_names, :factor_weights, :scores, :final_scores)";
+
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute(array(
 		':date'						=> date("Y-m-d H:i:s"),
-		':winner'					=>	$POST['winner'],
-		':progressPercentage'	=>	$POST['progressPercentage'],
-		':options'					=>	$POST['optionStr'],
-		':factor_names'			=>	$POST['factorNames'],
-		':factor_weights'			=>	$POST['factorWeights'],
-		':scores'					=>	$POST['scoreString'],
-		':final_scores'			=>	$POST['finalScoreStr']
+		':winner'					=>	$_POST['winner'],
+		':progressPercentage'	=>	$_POST['progressPercentage'],
+		':options'					=>	$_POST['optionStr'],
+		':factor_names'			=>	$_POST['factorNames'],
+		':factor_weights'			=>	$_POST['factorWeights'],
+		':scores'					=>	$_POST['scoreString'],
+		':final_scores'			=>	$_POST['finalScoreStr']
 	));			
 }
 
 //Create structure of user table
 echo('<table>');
 echo('<tr>');
-	echo('<td>Date</td>')
+	echo('<td>Date</td>');
 	echo('<td>Winner</td>');
 	echo('<td>ProgressPercentage</td>');
 	echo('<td>Options</td>');
