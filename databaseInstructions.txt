@@ -1,0 +1,29 @@
+Here's how to set up a database locallly using the current version
+of the code:
+
+Step 1: Download MAMP
+Step 2: Copy your entire rankit folder as-is right now
+Step 3: Click Applications in Finder -> MAMP -> htdocs
+Step 4: Paste
+Step 5: Run the MAMP application
+Step 6: A browswer window should pop-up with the start-page (if it
+	doesn't click "Open Start Page" in MAMP)
+Step 7: Click phpMyAdmin tab at the top of the webpage
+Step 8: Click the "Databases" tab
+Step 9: In the "Create database" field enter RankIt (must have
+	capital 'R' and 'I') and click "Create"
+Step 10: Go to the finder directory for rankit inside your
+	MAMP application (this is the folder you copied into htdocs)
+Step 11: Open db.php
+Step 12: Comment out this line:
+	$pdo = new PDO('mysql:host=sql100.byethost8.com;dbname=b8_13744073_RankIt', 'b8_13744073', '711442');
+Step 13: Uncomment this line:
+	$pdo = new PDO('mysql:host=localhost;port=8889;dbname=RankIt','root','root');
+Step 14: Open rankit.sql and copy its contents
+Step 15: Go back into phpMyAdmin, click Rankit under databases
+Step 16: Click the "SQL" tab, paste, click "Go"
+
+You should be all set!
+
+Now you should be able to complete a rankit and view the results in
+phpMyAdmin by clicking on the rankIt table and clicking Browse :)
