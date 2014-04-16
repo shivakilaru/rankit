@@ -15,6 +15,12 @@ li {
 	list-style-type: none;
 }
 
+input[type="submit"] {
+	-webkit-appearance: none;
+	box-sizing: none;
+}
+
+
 .main-container {
 	margin-top: 30px;
 	width: 960px;
@@ -75,15 +81,16 @@ ul.navigation {
 /_/  |_\__,_/\__,_/   \____/___/
 
 ================================== */
+
 .get-title {
-	margin-top: 40px;
+	margin-top: 30px;
 }
 
 .add-options, .add-factors {
 	width: 48%;
-	margin-top: 20px;
+	margin-top: 40px;
 	float: left;
-	min-height: 300px;
+	min-height: 400px;
 }
 
 .add-factors {
@@ -217,20 +224,12 @@ ul.navigation {
 =========================================================== */
 
 .title-wrapper{
-	height: 30px;
-			margin-bottom: 15px;
-
+	height: 40px;
 }
 
-.yourRankit {
+#yourRankit {
 	display: inline;
-	float: inline;
-	height:30px;
-	font-size: 20px;
-	font-weight: 300;
-	color: #5E5E5E;
-			margin-bottom: 15px;
-
+	height:40px;
 }
 
 #titleComp {
@@ -244,11 +243,11 @@ ul.navigation {
 }
 
 #question {
+	margin-top: 30px;
 	text-align: center;
 	font-size: 24px;
 	font-weight: 300;
 	color: #5E5E5E;
-	margin-top: 40px;
 }
 
 #decision-factor {
@@ -341,16 +340,6 @@ ul.navigation {
                                                   
 ================================================== */
 
-#titleResult {
-	display: inline;
-	color: black;
-	height:30px;
-	font-size: 20px;
-	font-weight: 700;
-	margin-left: 5px;
-	margin-bottom: 15px;
-}
-
 .heading {
 	font-size: 90px;
 	font-weight: 900;
@@ -359,7 +348,8 @@ ul.navigation {
 	display: inline;
 }
 
-.subheading {
+.result-subheading {
+	margin-top: 30px;
 	font-size: 30px;
 	font-weight: 300;
 	color: #5E5E5E;
@@ -485,6 +475,37 @@ ul.navigation {
 	margin-top: 55px;
 }
 
+#rank-action-container{
+	margin-top: 40px;
+	height: 100px;
+	text-align: center;
+	clear: both;
+}
+
+.button {
+	width: 200px;
+	height: 50px;
+	text-align: center;
+	margin: 0px 5px 0px 5px;
+	font-size: 24px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #BCBCBC;
+	color: white;
+	line-height: 50px;
+	position: relative;
+	padding: 20px 60px;
+}
+
+#save-rank {
+	display: inline;
+	background-color: #057D9F;
+}
+
+#share-rank {
+	display: inline;
+	background-color: #1DAB0A;
+}
 
 /* ==== Graph Stuff ==== */
 #graph {

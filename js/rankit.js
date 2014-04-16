@@ -36,9 +36,8 @@ $(document).ready(function(){
 	var choice1, choice2;
 	var decisionFactor;
 
+	var winnerResult;
 	var progressPercentage;
-
-
 
 
 
@@ -59,7 +58,7 @@ $(document).ready(function(){
    var VALIDURL	=  'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
 	var SCOPE    	=  'https://www.googleapis.com/auth/userinfo.profile ';
   	var CLIENTID  	=  '406950378888.apps.googleusercontent.com';
-  	var REDIRECT  	=  'http://shivakilaru.com/rankit/oauth.html'
+	var REDIRECT  	=  'http://dkoleanb.byethost8.com/RankIt/oauth.html';
   	var TYPE      	=  'token';
   	var _url      	=	OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + 
   							'&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
@@ -96,8 +95,8 @@ $(document).ready(function(){
           success: function(responseText){  
               getUserInfo();
               loggedIn = true;
-              $('#loginText').hide();
-              $('#logoutText').show();
+              // $('#loginText').hide();
+              // $('#logoutText').show();
           },  
           dataType: "jsonp"  
       });
@@ -110,11 +109,22 @@ $(document).ready(function(){
           success: function(resp) {
               user    =   resp;
               console.log(user);
-              $('#uName').text('Welcome ' + user.name);
-              $('#imgHolder').attr('src', user.picture);
+              addUserToDB(user);
+              //$('#login').text('Welcome ' + user.name);
+              //$('#imgHolder').attr('src', user.picture);
           },
           dataType: "jsonp"
       });
+  	}
+
+  	function addUserToDB(user) {
+  		var xmlhttp = new XMLHttpRequest();
+		var url 	= 	'db-handler.php';
+		var vars =  'google_id='+user['id']+'&first='+user['given_name']+
+						'&last='+user['family_name'];
+		xmlhttp.open('POST', url, true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(vars);
   	}
 
   	//credits: http://www.netlobo.com/url_query_string_javascript.html
@@ -133,11 +143,9 @@ $(document).ready(function(){
       $('#loginText').show();
       $('#logoutText').hide();
       loggedIn = false;
-      $('#uName').text('Welcome ');
-      $('#imgHolder').attr('src', 'none.jpg');
+      //$('#uName').text('Welcome ');
+      //$('#imgHolder').attr('src', 'none.jpg');
   	}
-
-
 
 
 
@@ -179,6 +187,13 @@ $(document).ready(function(){
 		}
 		$('#'+type+'-box').val("");
 		$('#'+type+'-box').focus();
+	}
+
+	function addTitle(){
+		// Get and Print Title
+		title = $('#title-box').val();
+		title = title.replace(/^\s+/, '').replace(/\s+$/, '');
+		document.getElementById("titleComp").innerHTML = title;
 	}
 
 	$('#submit-option').click(function() {
@@ -231,11 +246,7 @@ $(document).ready(function(){
 	});
 
 	function beginDeciding() {
-		// Get and Print Title
-		title = $('#title-box').val();
-		title = title.replace(/^\s+/, '').replace(/\s+$/, '');
-		document.getElementById("titleComp").innerHTML = title;
-		
+		addTitle();
 
 		// Clear arrays.
 		optionList = [];
@@ -304,6 +315,7 @@ $(document).ready(function(){
 	function presentNewDecision() {
 		// Have all decisions been made?
 		if (decisionCount == maxDecisions()) {
+			progressPercentage = Math.round(100*(decisionCount/maxDecisions()));
 			displayResults();
 			$("#compare-ui").hide('slow');
 			$("#results-ui").show('slow');
@@ -397,8 +409,12 @@ $(document).ready(function(){
 		var sum = 0.0;
 		for (f in factorList) {
 			var factor = factorList[f]['name'];
-			console.log(option + "'s score for " + factorList[f]['name'] + " is " + scores[option][factor]);
-			sum += parseFloat(scores[option][factor]) * parseFloat(factorList[f]['weight']);
+			
+			console.log(option + "'s score for " + factorList[f]['name'] + " is " + 
+				scores[option][factor]);
+			
+			sum += parseFloat(scores[option][factor]) * 
+				parseFloat(factorList[f]['weight']);
 		}
 		console.log(option + "'s total score is " + sum);
 		finalScores[option] = sum;
@@ -411,11 +427,9 @@ $(document).ready(function(){
 		$('#ranked-results').empty();
 		$('#certainty-val').empty();
 
-		// Print Title
-		document.getElementById("titleResult").innerHTML = title;
-
+		addTitle();
+		
 		// Compute and display updated data
-		var winner;
 		var winnerScore = 0;
 		for (var i = 0; i < optionList.length; i++) {
 			var appendString = ("<li class='results'>" + 
@@ -425,17 +439,20 @@ $(document).ready(function(){
 		}
 		for (var i = 0; i < optionList.length; i++) {
 			if (finalScores[optionList[i]] > winnerScore) {
-				winner = optionList[i];
+				winnerResult = optionList[i];
 				winnerScore = finalScores[optionList[i]];
 			} 
 		}
-		$("#result").text(winner);
+		$("#result").text(winnerResult);
 		$('#certainty-val').text(progressPercentage);
 
 		if (decisionCount == maxDecisions()) {
 			$('#finish-ranking').hide();
 		}
 
+		// alert(optionList);
+		// alert(factorList[0]["name"]);
+		// alert(scores);
 		displayGraph();
 	}
 
@@ -522,28 +539,49 @@ $(document).ready(function(){
 	});
 
 
-	//Note from Desmond to Desmond:
-	//This function creates an entry in the breakdown list
-	//Right now you're trying to figure out how to quantify
-	//the amount of shading in the breakdown graph
-	//As of now each factor should show up properly
-	// function createBreakdown() {
-	// 	for (var i=0; i < optionList.length; i++) {
-	// 		var rowString = 
-	// 		"	<div class = 'option-row'>
-	// 				<div class = 'option-name-wrapper'>
-	// 					<div class = 'option-name'>" + optionList[i] + "</div>
-	// 				</div>
-	// 				<div class = 'factor-graph'>";
-	// 		for (f in factorList) {
-	// 			var factorScore = scores[option][factorList[f]['name']];
-	// 			rowString += 
-	// 				"		<div id = 'factor-'"+f+" class = 'factor'></div>
-	// 					</div>
-	// 				</div>";
-	// 		}	
-	// 	}
-	// }
+	//Creates a POST variable that we can use to access DB without reloading page
+	$("#rank-action-container").submit(function(event) {
+		
+		//Stop form from submitting normally
+		event.preventDefault();
+
+		//Prepare variables for database
+
+		var optionStr	 	= 	optionList.toString();
+		var factorWeights	=	'';
+		var scoreString	=	'';
+		var finalScoreStr =	'';
+
+		for (var i = 0; i < factorList.length; ++i) {
+			factorWeights	+= factorList[i]['weight'].toString()+',';
+		}
+		factorWeights = factorWeights.substring(0,factorWeights.length-1);
+		factorNames = factorNames.toString();
+		
+		for (var i = 0; i < optionList.length; ++i) {
+			for ( var j = 0; j < factorList.length; ++j) {
+				scoreString += scores[optionList[i]][factorList[j]['name']] + ',';
+			}
+			finalScoreStr += finalScores[optionList[i]] + ',';
+		}
+		scoreString 	= scoreString.substring(0,scoreString.length-1);
+		finalScoreStr = finalScoreStr.substring(0,finalScoreStr.length-1); 
+
+		//Store important variables to recreate Rankit
+		var xmlhttp = new XMLHttpRequest();
+		var url = 	'db-handler.php'
+		var vars = 	'winner='+winnerResult+
+						'&progressPercentage='+progressPercentage+
+						'&optionStr='+optionStr+
+						'&factorNames='+factorNames+
+						'&factorWeights='+factorWeights+
+						'&scoreString='+scoreString+
+						'&finalScoreStr='+finalScoreStr;
+		console.log(vars);
+		xmlhttp.open('POST', url, true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(vars);
+	});
 
 
 
