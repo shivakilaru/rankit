@@ -531,8 +531,6 @@ ul.navigation {
  / /_/ / /  / /_/ / |/ |/ (__  )  __/
 /_.___/_/   \____/|__/|__/____/\___/ 
 
-# is a id
-. is a class
 =============================================== */
 
 .browseBox {
@@ -561,7 +559,37 @@ ul.navigation {
 }
 
 
-
 .browseBox-author{
 	font-weight: 300;
+}
+
+
+#myrankit-list{
+	width: 100%;
+	padding: 10px;
+	background-color: #e0e0e0;
+	border-radius: 10px;
+}
+
+.myrankit-title{
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.myrankit-decision{
+	font-size: 14px;
+	font-weight: 300;
+}
+
+.myrankit-certainty{
+	font-size: 14px;
+	font-weight: 300;
+}
+
+.user-decision{
+	font-weight: bold; 
+}
+
+.user-certainty{
+	font-weight: bold; 
 }
