@@ -16,9 +16,9 @@ li {
 }
 
 .main-container {
-	margin-top: 30px;
 	width: 960px;
-	margin: 0 auto;
+	margin: 20px auto;
+	overflow: hidden;
 }
 
 #compare-ui, #results-ui {
@@ -84,7 +84,7 @@ ul.navigation {
 	width: 48%;
 	margin-top: 40px;
 	float: left;
-	min-height: 400px;
+	min-height: 300px;
 }
 
 .add-factors {
@@ -477,7 +477,7 @@ ul.navigation {
 	float: left;
 	cursor: pointer;
 	margin-right: 10px;
-	background-color: #1DAB0A;;
+	background-color: #1DAB0A;
 }
 
 /* ==== Graph Stuff ==== */

@@ -1,42 +1,79 @@
-$(document).ready(function(){
+/* ================================
+   ________      __          __    
+  / ____/ /___  / /_  ____ _/ /____
+ / / __/ / __ \/ __ \/ __ `/ / ___/
+/ /_/ / / /_/ / /_/ / /_/ / (__  ) 
+\____/_/\____/_.___/\__,_/_/____/  
+
+================================== */
+
+var title;
+var winnerResult;
+var progressPercentage;
+
+var optionList = new Array();
+var noFactors = true;
+var factorNames = new Array();
+var factorWeights = new Array();	
+
+var decisions = new Array();
+var decisionCount = 0;
+
+var scores = {};
+var finalScores = {};
+
+var choice1, choice2;
+var decisionFactor;
+
+
+
+function reloadRankit(in_title, in_winner, in_progressPercentage, in_options, in_noFactors, in_factorNames, in_factorWeights, in_decisions, in_decisionCount, in_scores, in_finalScores) {
+	scores = {};
+	title = in_title;
+	winner = in_winner;
+	progressPercentage = parseInt(in_progressPercentage);
+	optionList = in_options.split(',');
+	noFactors = in_noFactors;
+	factorNames = in_factorNames.split(',');
+	factorWeights = in_factorWeights.split(',');
+	decisions = in_decisions.split(',');
+	decisionCount = parseInt(in_decisionCount);
+	in_scores = in_scores.split(',');
+
+	console.log(optionList);
+
+	for (var i = 0; i< optionList.length; i++) {
+		console.log("====UPDATING SCORES FOR NEW PERSON=====: " + i);
+		var factorIndex = 0;
+		for (var j=(i*optionList.length); j<((i+1)*optionList.length); j++) {
+			console.log("====UPDATING SCORES FOR NEW FACTOR=====: " + j);
+			var option = optionList[i];
+			var factor = factorNames[factorIndex];
+			var score = in_scores[j];
+			if (scores[option] == undefined) {
+				scores[option] = {};
+			}
+			console.log(option + " / " + factor); 
+			scores[option][factor] = score;
+			console.log(scores);
+			factorIndex++;
+		}
+	}
+
+	finalScores = in_finalScores.split(',');
+
+	$(document).ready(function() {
+		displayResults();
+		$('#add-ui').hide();
+		$("#results-ui").show('slow');
+	});
+
+}
+
 
 	// === Fade In === //
 	$('body').hide();
 	$('body').fadeIn(1500);
-
-
-
-
-
-
-	/* ================================
-	   ________      __          __    
-	  / ____/ /___  / /_  ____ _/ /____
-	 / / __/ / __ \/ __ \/ __ `/ / ___/
-	/ /_/ / / /_/ / /_/ / /_/ / (__  ) 
-	\____/_/\____/_.___/\__,_/_/____/  
-
-	================================== */
-
-	var optionList = new Array();
-	var factorList = new Array();
-	var noFactors = true;
-
-	// @TODO-1: refactor this so we don't need 2 arrays of factors
-	var factorNames = new Array();
-
-	var decisions = new Array();
-	var decisionCount = 0;
-
-	var scores = {};
-	var finalScores = {};
-
-	var choice1, choice2;
-	var decisionFactor;
-
-	var winnerResult;
-	var progressPercentage;
-	var title;
 
 
 
@@ -53,7 +90,7 @@ $(document).ready(function(){
 	//Login code courtesy of saly2k on gethugames.in
 
 	var OAUTHURL	=  'https://accounts.google.com/o/oauth2/auth?';
-   var VALIDURL	=  'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
+    var VALIDURL	=  'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
 	var SCOPE    	=  'https://www.googleapis.com/auth/userinfo.profile ';
   	var CLIENTID  	=  '406950378888.apps.googleusercontent.com';
 	var REDIRECT  	=  'http://dkoleanb.byethost8.com/RankIt/oauth.html';
@@ -147,6 +184,8 @@ $(document).ready(function(){
 
 
 
+
+
 	/* ================================
 	    ___       __    __   __  ______
 	   /   | ____/ /___/ /  / / / /  _/
@@ -188,9 +227,7 @@ $(document).ready(function(){
 
 	function addTitle(){
 		// Get and Print Title
-		title = $('#title-box').val();
-		title = title.replace(/^\s+/, '').replace(/\s+$/, '');
-		document.getElementById("titleComp").innerHTML = title;
+		$('#titleComp').text(title);
 	}
 
 	$('#submit-option').click(function() {
@@ -247,8 +284,10 @@ $(document).ready(function(){
 
 		// Clear arrays.
 		optionList = [];
-		factorList = [];
+		factorNames = [];
+		factorWeights = [];
 		decisions = [];
+		decisionCount = 0;
 		scores = {};
 		// Create option list.
 		for (i = 0; i < $('#option-list').children().length; i++) {
@@ -264,23 +303,21 @@ $(document).ready(function(){
 		for (i = 0; i < $('#factor-list').children().length; i++) {
 			var factorText = $('#factor-list').children().eq(i).text();
 			var factorWeight = $('#factor-list').children().eq(i).children('.factor-slider').attr('value');
-			var factorInList = new Object();
-			factorInList["name"] = factorText;
-			factorInList["weight"] = factorWeight;
-			// @TODO-1
 			factorNames.push(factorText);
-			factorList.push(factorInList);
+			factorWeights.push(factorWeight);
 		}
 
 		// Are there factors present?
-		if (factorList.length > 0) {
+		if (factorNames.length > 0) {
 			noFactors = false;
 		}
 		// If not, create a "shadow" factor to make the code work.
 		else {
 			$('#question').text("Which of these is better?");
-			var defaultFactor = {"name":'default', "weight":'1'};
-			factorList.push(defaultFactor);
+			var defaultFactorName = 'default';
+			var defaultFactorWeight = 1;
+			factorNames.push(defaultFactorName);
+			factorWeights.push(defaultFactorWeight);
 		}
 
 		// Make factor weights sum to 0.
@@ -288,16 +325,16 @@ $(document).ready(function(){
 		// Print options, factors, and scores to console.
 		console.log("Options: " + optionList);
 		console.log("Factors:");
-		for (f in factorList) {
-			console.log(factorList[f]['name'] + ": " + factorList[f]['weight']);
+		for (f in factorNames) {
+			console.log(factorNames[f] + ": " + factorWeights[f]);
 		}
 		console.log("Scores:");
 		// Create score list. All options have a starting score of 500 for each factor.
 		for (o in optionList) {
 			var option = optionList[o];
 			scores[option] = {};
-			for (f in factorList) {
-				var factor = factorList[f]['name'];
+			for (f in factorNames) {
+				var factor = factorNames[f];
 				scores[option][factor] = 500;
 				console.log(option + " in " + factor + ": " + scores[option][factor]);
 			}
@@ -327,7 +364,7 @@ $(document).ready(function(){
 			while (j == i) {
 				j = Math.floor(Math.random() * optionList.length);
 			}
-			var k = Math.floor(Math.random() * factorList.length);
+			var k = Math.floor(Math.random() * factorNames.length);
 			
 			progressPercentage = Math.round(100*(decisionCount/maxDecisions()));
 			var progressMessage = decisionCount + " comparisons made. Decision " +
@@ -336,7 +373,7 @@ $(document).ready(function(){
 
 			choice1 = optionList[i];
 			choice2 = optionList[j];
-			decisionFactor = factorList[k]['name'];
+			decisionFactor = factorNames[k];
 		} while (thisDecisionMadeAlready());
 
 		var decisionString = (choice1 + "." + choice2 + "." + decisionFactor);
@@ -404,14 +441,14 @@ $(document).ready(function(){
 	// For a given option, calculate total score across all factors.
 	function getTotalScore(option) {
 		var sum = 0.0;
-		for (f in factorList) {
-			var factor = factorList[f]['name'];
+		for (f in factorNames) {
+			var factor = factorNames[f];
 			
-			console.log(option + "'s score for " + factorList[f]['name'] + " is " + 
+			console.log(option + "'s score for " + factorNames[f] + " is " + 
 				scores[option][factor]);
 			
 			sum += parseFloat(scores[option][factor]) * 
-				parseFloat(factorList[f]['weight']);
+				parseFloat(factorWeights[f]);
 		}
 		console.log(option + "'s total score is " + sum);
 		finalScores[option] = sum;
@@ -447,9 +484,6 @@ $(document).ready(function(){
 			$('#finish-ranking').hide();
 		}
 
-		// alert(optionList);
-		// alert(factorList[0]["name"]);
-		// alert(scores);
 		displayGraph();
 	}
 
@@ -463,9 +497,9 @@ $(document).ready(function(){
 			var option = optionList[o];
 			var entry = new Array();
 			var entryFactorScores = new Array();
-			for (f in factorList) {
-				var factor = factorList[f]['name'];
-				entryFactorScores.push(Math.floor(scores[option][factor]*factorList[f]['weight']));
+			for (f in factorNames) {
+				var factor = factorNames[f];
+				entryFactorScores.push(Math.floor(scores[option][factor]*factorWeights[f]));
 			}
 			entry.push(entryFactorScores);
 			entry.push(option);
@@ -475,7 +509,7 @@ $(document).ready(function(){
 
 		// Construct colors array
 		var colors = new Array();
-		for (f in factorList) {
+		for (f in factorNames) {
 			switch (f%6) {
 				case (0):
 					colors.push('#282828');
@@ -550,32 +584,38 @@ $(document).ready(function(){
 	============================= */
 
 	function factorial(n) {
+		console.log("N is: " + n );
 		if (n == 0) {
+			console.log("YO!");
 			return 1;
 		}
 		else {
+			console.log("NO!");
 			return (n*factorial(n-1));	
 		}
 	}
 
 	// EECS 203 HOLLA (the number of ways to choose a items from b items)
 	function choose(a,b) {
+		console.log(a + "RIcK");
+		console.log(b + "RICK");
 		return (factorial(a) / (factorial(b) * factorial(a - b)));	
 	}
 
 	// Will be used to calculate progress % and "Certainty" value.
 	function maxDecisions() {
-		return (choose(optionList.length, 2) * factorList.length);	
+		console.log(optionList.length);
+		return (choose(optionList.length, 2) * factorNames.length);	
 	}
 
 	// Make total weight sum to 1
 	function normalizeWeights() {
 		var sum = 0.0;
-		for (f in factorList) {
-			sum = parseFloat(sum) + parseFloat(factorList[f]['weight']);
+		for (f in factorNames) {
+			sum = parseFloat(sum) + parseFloat(factorWeights[f]);
 		}
-		for (f in factorList) {
-			factorList[f]['weight'] = 1.0 * factorList[f]['weight'] / sum;
+		for (f in factorNames) {
+			factorWeights[f] = 1.0 * factorWeights[f] / sum;
 		}
 	}
 
@@ -596,6 +636,9 @@ $(document).ready(function(){
 
 
 
+
+
+
 	/* ======================
 	   _____                
 	  / ___/____ __   _____ 
@@ -608,36 +651,37 @@ $(document).ready(function(){
 	// Save to DB via POST without reloading page
 	$("#save-rankit").click(function() {
 		
+		// Convert Rankit variables to strings for storage in DB.
 		var optionStr = optionList.toString();
-		var factorWeights =	'';
-		var scoreString	= '';
-		var finalScoreStr =	'';
-
-		for (var i = 0; i < factorList.length; ++i) {
-			factorWeights	+= factorList[i]['weight'].toString()+',';
-		}
-		factorWeights = factorWeights.substring(0,factorWeights.length-1);
-		factorNames = factorNames.toString();
+		var noFactorsStr = noFactors ? 1 : 0;
+		var factorNamesStr = factorNames.toString();
+		var factorWeightsStr = factorWeights.toString();
+		var decisionsStr = decisions.toString();
+		var scoresStr = '';
+		var finalScoresStr = '';
 		
 		for (var i = 0; i < optionList.length; ++i) {
-			for ( var j = 0; j < factorList.length; ++j) {
-				scoreString += scores[optionList[i]][factorList[j]['name']] + ',';
+			for ( var j = 0; j < factorNames.length; ++j) {
+				scoresStr += scores[optionList[i]][factorNames[j]] + ',';
 			}
-			finalScoreStr += finalScores[optionList[i]] + ',';
+			finalScoresStr += finalScores[optionList[i]] + ',';
 		}
-		scoreString 	= scoreString.substring(0,scoreString.length-1);
-		finalScoreStr = finalScoreStr.substring(0,finalScoreStr.length-1); 
 
-		//Store important variables to recreate Rankit
+		scoresStr = scoresStr.substring(0,scoresStr.length-1);
+		finalScoresStr = finalScoresStr.substring(0,finalScoresStr.length-1); 
+
+		// Store important variables to recreate Rankit
 		var vars = 	'title='+title+
 					'&winner='+winnerResult+
 					'&progressPercentage='+progressPercentage+
 					'&optionStr='+optionStr+
-					'&factorNames='+factorNames+
-					'&factorWeights='+factorWeights+
-					'&scoreString='+scoreString+
-					'&finalScoreStr='+finalScoreStr;
-		console.log(vars);
+					'&noFactorsStr='+noFactorsStr+
+					'&factorNamesStr='+factorNamesStr+
+					'&factorWeightsStr='+factorWeightsStr+
+					'&decisionsStr='+decisionsStr+
+					'&decisionCount='+decisionCount+
+					'&scoresStr='+scoresStr+
+					'&finalScoresStr='+finalScoresStr;
 
 		$.ajax({
 		    url: 'db-handler.php',
@@ -662,4 +706,3 @@ $(document).ready(function(){
 		alert("Rankit saved!");
 	});
 		
-});

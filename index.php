@@ -24,28 +24,45 @@ require_once "db.php";
 		<script src="js/masonry.pkgd.js"></script>
 		<script src="js/rankit.js"></script>
 
-
 	</head>
 	
 	<body>
 
 		<?php
+			echo('<script src="js/rankit.js"></script>');
 			if (isset($_GET['id'])){
 				$sql = "SELECT * FROM rankit WHERE id = ".$_GET['id'];
 				$stmt = $pdo->query($sql);
 				while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
 				{
-					echo('<tr>');
-						echo('<td>'.$row['date'].'</td>');
-						echo('<td>'.$row['title'].'</td>');
-						echo('<td>'.$row['winner'].'</td>');
-						echo('<td>'.$row['progress_percentage'].'</td>');
-						echo('<td>'.$row['option_str'].'</td>');
-						echo('<td>'.$row['factor_names'].'</td>');
-						echo('<td>'.$row['factor_weights'].'</td>');
-						echo('<td>'.$row['scores'].'</td>');
-						echo('<td>'.$row['final_scores'].'</td>');
-					echo('</tr>');
+					$title = "'".(string)$row["title"]."'";
+					$winner = "'".(string)$row["winner"]."'";
+					$progress_percentage = "'".(string)$row["progress_percentage"]."'";
+					$options = "'".(string)$row["options"]."'";
+					$no_factors = "'".(string)$row["no_factors"]."'";
+					$factor_names = "'".(string)$row["factor_names"]."'";
+					$factor_weights = "'".(string)$row["factor_weights"]."'";
+					$decisions = "'".(string)$row["decisions"]."'";
+					$decision_count = "'".(string)$row["decision_count"]."'";
+					$scores = "'".(string)$row["scores"]."'";
+					$final_scores = "'".(string)$row["final_scores"]."'";
+
+					echo('<script type="text/javascript">
+						$(window).on("load", function() {
+							reloadRankit('
+								.$title.','
+								.$winner.','
+								.$progress_percentage.','
+								.$options.','
+								.$no_factors.','
+								.$factor_names.','
+								.$factor_weights.','
+								.$decisions.','
+								.$decision_count.','
+								.$scores.','
+								.$final_scores.');
+						})
+						</script>');
 				}
 			}
 		?>
@@ -53,8 +70,8 @@ require_once "db.php";
 		<!-- ===== DELETE THIS, ONLY FOR TESTING THE LAST PAGE ==== -->
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$('#add-ui').hide();
-				$('#results-ui').show();
+				// $('#add-ui').hide();
+				// $('#results-ui').show();
 			});
 		</script>
 	
