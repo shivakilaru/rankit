@@ -1,5 +1,7 @@
 <?php
 require_once "db.php";
+ini_set('display_errors', 1);
+error_reporting(E_ALL ^ E_NOTICE);
 
 /* ===================================================================
    __  __                  ____        __        __                  
@@ -50,6 +52,7 @@ while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
 		echo('<td>'.$row['last_name'].'</td>');
 	echo('</tr>');
 }
+echo('</table>');
 
 
 
@@ -64,32 +67,39 @@ while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
 
 //Check if adding Rankit to database
 
-if (isset($_POST['winner']) && isset($_POST['progressPercentage']) && 
-	isset($_POST['optionStr']) && isset($_POST['factorNames']) && 
-	isset($_POST['factorWeights']) && isset($_POST['scoreString']) &&
+if (isset($_POST['title']) && 
+	isset($_POST['winner']) && 
+	isset($_POST['progressPercentage']) && 
+	isset($_POST['optionStr']) && 
+	isset($_POST['factorNames']) && 
+	isset($_POST['factorWeights']) && 
+	isset($_POST['scoreString']) &&
 	isset($_POST['finalScoreStr'])) 
 {
 	//$query_sql = $pdo->query("SELECT id FROM users WHERE id ")
 
-	$sql = 	"INSERT INTO rankit (date, winner, progress_percentage,options, 
+	$sql = 	"INSERT INTO rankit (date, title, winner, progress_percentage, options, 
 				factor_names, factor_weights, scores, final_scores) 
-				VALUES (:date, :winner, :progressPercentage, :options, 
+				VALUES (:date, :title, :winner, :progressPercentage, :options, 
 				:factor_names, :factor_weights, :scores, :final_scores)";
 
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute(array(
-		':date'						=> date("Y-m-d H:i:s"),
+		':date'						=> 	date("Y-m-d H:i:s"),
+		':title'					=> 	$_POST['title'],
 		':winner'					=>	$_POST['winner'],
-		':progressPercentage'	=>	$_POST['progressPercentage'],
+		':progressPercentage'		=>	$_POST['progressPercentage'],
 		':options'					=>	$_POST['optionStr'],
-		':factor_names'			=>	$_POST['factorNames'],
+		':factor_names'				=>	$_POST['factorNames'],
 		':factor_weights'			=>	$_POST['factorWeights'],
 		':scores'					=>	$_POST['scoreString'],
-		':final_scores'			=>	$_POST['finalScoreStr']
+		':final_scores'				=>	$_POST['finalScoreStr']
 	));			
 }
 
-//Create structure of user table
+//Create structure of rankit table
+echo('<br/><br/><br/>');
+echo('RANKIT DATABASE');
 echo('<table>');
 echo('<tr>');
 	echo('<td>Date</td>');
@@ -101,6 +111,23 @@ echo('<tr>');
 	echo('<td>Scores</td>'); 
 	echo('<td>Final Scores</td>'); 
 echo('</tr>');
+
+//Display contents of rankit table
+$stmt = $pdo->query("SELECT * FROM rankit");
+while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
+{
+	echo('<tr>');
+		echo(count($row));
+		echo('<td>'.$row['title'].'</td>');
+		echo('<td>'.$row['winner'].'</td>');
+		echo('<td>'.$row['progress_percentage'].'</td>');
+		echo('<td>'.$row['option_str'].'</td>');
+		echo('<td>'.$row['factor_names'].'</td>');
+		echo('<td>'.$row['factor_weights'].'</td>');
+		echo('<td>'.$row['scores'].'</td>');
+		echo('<td>'.$row['final_scores'].'</td>');
+	echo('</tr>');
+}
 echo('</table>');
 
 ?>

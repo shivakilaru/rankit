@@ -536,49 +536,8 @@ $(document).ready(function(){
 	});
 
 
-	//Creates a POST variable that we can use to access DB without reloading page
-	$("#rank-action-container").submit(function(event) {
-		
-		//Stop form from submitting normally
-		event.preventDefault();
 
-		//Prepare variables for database
 
-		var optionStr	 	= 	optionList.toString();
-		var factorWeights	=	'';
-		var scoreString	=	'';
-		var finalScoreStr =	'';
-
-		for (var i = 0; i < factorList.length; ++i) {
-			factorWeights	+= factorList[i]['weight'].toString()+',';
-		}
-		factorWeights = factorWeights.substring(0,factorWeights.length-1);
-		factorNames = factorNames.toString();
-		
-		for (var i = 0; i < optionList.length; ++i) {
-			for ( var j = 0; j < factorList.length; ++j) {
-				scoreString += scores[optionList[i]][factorList[j]['name']] + ',';
-			}
-			finalScoreStr += finalScores[optionList[i]] + ',';
-		}
-		scoreString 	= scoreString.substring(0,scoreString.length-1);
-		finalScoreStr = finalScoreStr.substring(0,finalScoreStr.length-1); 
-
-		//Store important variables to recreate Rankit
-		var xmlhttp = new XMLHttpRequest();
-		var url = 	'db-handler.php';
-		var vars = 	'winner='+winnerResult+
-						'&progressPercentage='+progressPercentage+
-						'&optionStr='+optionStr+
-						'&factorNames='+factorNames+
-						'&factorWeights='+factorWeights+
-						'&scoreString='+scoreString+
-						'&finalScoreStr='+finalScoreStr;
-		console.log(vars);
-		xmlhttp.open('POST', url, true);
-		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xmlhttp.send(vars);
-	});
 
 
 	/* ==========================
@@ -630,5 +589,79 @@ $(document).ready(function(){
 		}
 		return false;
 	}
+
+
+
+
+
+
+
+	/* ======================
+	   _____                
+	  / ___/____ __   _____ 
+	  \__ \/ __ `/ | / / _ \
+	 ___/ / /_/ /| |/ /  __/
+	/____/\__,_/ |___/\___/ 
+
+	======================== */
+
+	// Save to DB via POST without reloading page
+	$("#save-rankit").click(function() {
+		
+		alert("YO");
+
+		var optionStr = optionList.toString();
+		var factorWeights =	'';
+		var scoreString	= '';
+		var finalScoreStr =	'';
+
+		for (var i = 0; i < factorList.length; ++i) {
+			factorWeights	+= factorList[i]['weight'].toString()+',';
+		}
+		factorWeights = factorWeights.substring(0,factorWeights.length-1);
+		factorNames = factorNames.toString();
+		
+		for (var i = 0; i < optionList.length; ++i) {
+			for ( var j = 0; j < factorList.length; ++j) {
+				scoreString += scores[optionList[i]][factorList[j]['name']] + ',';
+			}
+			finalScoreStr += finalScores[optionList[i]] + ',';
+		}
+		scoreString 	= scoreString.substring(0,scoreString.length-1);
+		finalScoreStr = finalScoreStr.substring(0,finalScoreStr.length-1); 
+
+		//Store important variables to recreate Rankit
+		var vars = 	'title='+title+
+					'&winner='+winnerResult+
+					'&progressPercentage='+progressPercentage+
+					'&optionStr='+optionStr+
+					'&factorNames='+factorNames+
+					'&factorWeights='+factorWeights+
+					'&scoreString='+scoreString+
+					'&finalScoreStr='+finalScoreStr;
+		console.log(vars);
+
+		$.ajax({
+		    url: 'db-handler.php',
+		    data: vars,
+		    cache: false,
+		    type: 'POST',
+		    // dataType: "json",
+	        contentType: 'application/x-www-form-urlencoded, charset=utf-8',
+		    success: function(data){
+		 		window.console && console.log("POST success"); 
+		    	window.console && console.log(data);
+		    },
+		    error: function (jqXHR, textStatus, errorThrown) {
+		        console.log("ERROR: " + jqXHR.responseText);
+		    },
+		    failure: function(result) {
+	            console.log("FAILED");
+	            console.log(result);
+	        }
+		  });
+
+		alert("RICK");
+	});
 		
 });

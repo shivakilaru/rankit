@@ -24,14 +24,22 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
 		<script src="js/jqBarGraph.1.1.min.js"></script>
-		<script src="jquery.js"></script>
 		<script src="js/masonry.pkgd.js"></script>
 		<script src="js/rankit.js"></script>
+		<script src="js/backend.js"></script>
 
 
 	</head>
 	
 	<body>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#add-ui').hide();
+				$('#results-ui').show();
+				console.log("RICK");
+			});
+		</script>
 	
 		<div class="main-container">
 			
@@ -189,10 +197,9 @@
 					<div id="graph">
 					</div>
 
-						<form id = "rank-action-container">
-							<input type="submit" id="save-rank" class="button" name="save-rank" value="Save">
-							<input type="submit" id="share-rank" class="button" name="share-rank" value="Share">
-						</form>
+					<input type="submit" id="save-rankit" class="button" name="save-rankit" value="Save">
+					<input type="submit" id="share-rankit" class="button" name="share-rankit" value="Share">
+
 				</div>
 			</div>	
 		</div>
