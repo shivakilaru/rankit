@@ -180,23 +180,12 @@ ul.navigation {
 	background-image: url('../img/add-icon-2.png');
 }
 
-/* ===== Rank Button ===== */
+/* ===== Button ===== */
 #go-rank {
 	width: 200px;
 	height: 50px;
 	margin: 0 auto;
-	text-align: center;
-	font-size: 24px;
-	font-weight: bold;
-	border-radius: 5px;
-	background-color: #BCBCBC;
 	clear: both;
-	color: white;
-	line-height: 50px;
-	user-select: none;
-	-webkit-user-select: none;
-	transition: all 0.7s;
-  	-webkit-transition: all 0.7s;
 }
 
 #go-rank.clickable {
@@ -204,6 +193,21 @@ ul.navigation {
 	cursor: pointer;
 }
 
+.button {
+	width: 200px;
+	height: 50px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	border-radius: 5px;
+	background-color: #BCBCBC;
+	line-height: 50px;
+	color: white;
+	user-select: none;
+	-webkit-user-select: none;
+	transition: all 0.7s;
+  	-webkit-transition: all 0.7s;
+}
 
 
 
@@ -469,26 +473,11 @@ ul.navigation {
 	clear: both;
 }
 
-.button {
-	width: 200px;
-	height: 70px;
-	text-align: center;
-	margin: 0px 5px 0px 5px;
-	font-size: 24px;
-	font-weight: bold;
-	border-radius: 5px;
-	color: white;
-	line-height: 50px;
-}
-
-#save-rank {
-	display: inline;
-	background-color: #057D9F;
-}
-
-#share-rank {
-	display: inline;
-	background-color: #1DAB0A;
+#save-rankit, #share-rankit {
+	float: left;
+	cursor: pointer;
+	margin-right: 10px;
+	background-color: #1DAB0A;;
 }
 
 /* ==== Graph Stuff ==== */
@@ -523,6 +512,8 @@ ul.navigation {
 .graphValuegraph {
 	font-weight: 300;
 }
+
+
 
 /* ===============================================
 

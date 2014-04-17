@@ -3,6 +3,8 @@ require_once "db.php";
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
+echo("<style>body{font-family:sans-serif;}td{padding:10px;}</style>");
+
 /* ===================================================================
    __  __                  ____        __        __                  
   / / / /_______  _____   / __ \____ _/ /_____ _/ /_  ____ _________ 
@@ -27,13 +29,13 @@ if (isset($_POST['google_id']) && isset($_POST['first']) && isset($_POST['last']
 		$stmt->execute(array(
 			':google_id' 	=>	$_POST['google_id'],
 			':first' 		=>	$_POST['first'],
-			':last' 			=> $_POST['last']
+			':last' 		=> $_POST['last']
 		));
 	}
 }
 
 //Create structure of user table
-echo('USER DATABASE');
+echo('<h2>USER DATABASE</h2>');
 
 echo('<table>');
 echo('<tr>');
@@ -99,10 +101,11 @@ if (isset($_POST['title']) &&
 
 //Create structure of rankit table
 echo('<br/><br/><br/>');
-echo('RANKIT DATABASE');
+echo('<h2>RANKIT DATABASE</h2>');
 echo('<table>');
 echo('<tr>');
 	echo('<td>Date</td>');
+	echo('<td>Title</td>');
 	echo('<td>Winner</td>');
 	echo('<td>ProgressPercentage</td>');
 	echo('<td>Options</td>');
@@ -117,7 +120,7 @@ $stmt = $pdo->query("SELECT * FROM rankit");
 while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
 {
 	echo('<tr>');
-		echo(count($row));
+		echo('<td>'.$row['date'].'</td>');
 		echo('<td>'.$row['title'].'</td>');
 		echo('<td>'.$row['winner'].'</td>');
 		echo('<td>'.$row['progress_percentage'].'</td>');

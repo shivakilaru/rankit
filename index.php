@@ -1,13 +1,10 @@
+<?php
+require_once "db.php";
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
 <html> 
-
-<?php
-	if (isset($_POST['cat'])){
-		echo $_POST['cat'];
-	}
-?>
-
 
 	<head> 
 
@@ -26,18 +23,38 @@
 		<script src="js/jqBarGraph.1.1.min.js"></script>
 		<script src="js/masonry.pkgd.js"></script>
 		<script src="js/rankit.js"></script>
-		<script src="js/backend.js"></script>
 
 
 	</head>
 	
 	<body>
 
+		<?php
+			if (isset($_GET['id'])){
+				$sql = "SELECT * FROM rankit WHERE id = ".$_GET['id'];
+				$stmt = $pdo->query($sql);
+				while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
+				{
+					echo('<tr>');
+						echo('<td>'.$row['date'].'</td>');
+						echo('<td>'.$row['title'].'</td>');
+						echo('<td>'.$row['winner'].'</td>');
+						echo('<td>'.$row['progress_percentage'].'</td>');
+						echo('<td>'.$row['option_str'].'</td>');
+						echo('<td>'.$row['factor_names'].'</td>');
+						echo('<td>'.$row['factor_weights'].'</td>');
+						echo('<td>'.$row['scores'].'</td>');
+						echo('<td>'.$row['final_scores'].'</td>');
+					echo('</tr>');
+				}
+			}
+		?>
+
+		<!-- ===== DELETE THIS, ONLY FOR TESTING THE LAST PAGE ==== -->
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('#add-ui').hide();
 				$('#results-ui').show();
-				console.log("RICK");
 			});
 		</script>
 	
@@ -114,7 +131,7 @@
 
 					</div>
 
-					<div id="go-rank" class="clickable">
+					<div id="go-rank" class="clickable button">
 						Rank!
 					</div>
 
@@ -197,8 +214,8 @@
 					<div id="graph">
 					</div>
 
-					<input type="submit" id="save-rankit" class="button" name="save-rankit" value="Save">
-					<input type="submit" id="share-rankit" class="button" name="share-rankit" value="Share">
+					<div id="save-rankit" class="button" name="save-rankit" value="Save">Save</div>
+					<div id="share-rankit" class="button" name="share-rankit" value="Share">Share</div>
 
 				</div>
 			</div>	

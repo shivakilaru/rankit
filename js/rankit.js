@@ -608,8 +608,6 @@ $(document).ready(function(){
 	// Save to DB via POST without reloading page
 	$("#save-rankit").click(function() {
 		
-		alert("YO");
-
 		var optionStr = optionList.toString();
 		var factorWeights =	'';
 		var scoreString	= '';
@@ -661,7 +659,7 @@ $(document).ready(function(){
 	        }
 		  });
 
-		alert("RICK");
+		alert("Rankit saved!");
 	});
 		
 });
