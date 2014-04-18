@@ -30,6 +30,7 @@ var decisionFactor;
 function reloadRankit(in_title, in_winner, in_progressPercentage, in_options, in_noFactors, in_factorNames, in_factorWeights, in_decisions, in_decisionCount, in_scores, in_finalScores) {
 	scores = {};
 	title = in_title;
+	console.log(title);
 	winner = in_winner;
 	progressPercentage = parseInt(in_progressPercentage);
 	optionList = in_options.split(',');
@@ -64,6 +65,7 @@ function reloadRankit(in_title, in_winner, in_progressPercentage, in_options, in
 
 	$(document).ready(function() {
 		displayResults();
+		updateTitle();
 		$('#add-ui').hide();
 		$("#results-ui").show('slow');
 	});
@@ -225,9 +227,9 @@ function reloadRankit(in_title, in_winner, in_progressPercentage, in_options, in
 		$('#'+type+'-box').focus();
 	}
 
-	function addTitle(){
+	function updateTitle() {
 		// Get and Print Title
-		$('#titleComp').text(title);
+		$('#titleComp').append(title);
 	}
 
 	$('#submit-option').click(function() {
@@ -461,7 +463,7 @@ function reloadRankit(in_title, in_winner, in_progressPercentage, in_options, in
 		$('#ranked-results').empty();
 		$('#certainty-val').empty();
 
-		addTitle();
+		updateTitle();
 		
 		// Compute and display updated data
 		var winnerScore = 0;
@@ -586,19 +588,15 @@ function reloadRankit(in_title, in_winner, in_progressPercentage, in_options, in
 	function factorial(n) {
 		console.log("N is: " + n );
 		if (n == 0) {
-			console.log("YO!");
 			return 1;
 		}
 		else {
-			console.log("NO!");
 			return (n*factorial(n-1));	
 		}
 	}
 
 	// EECS 203 HOLLA (the number of ways to choose a items from b items)
 	function choose(a,b) {
-		console.log(a + "RIcK");
-		console.log(b + "RICK");
 		return (factorial(a) / (factorial(b) * factorial(a - b)));	
 	}
 
