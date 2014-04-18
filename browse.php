@@ -73,7 +73,7 @@ require_once "db.php";
 					</div>
 
 					<ul class="navigation">
-						<li>Browse</li>
+						<a href="browse.php" style="float:left;"><li>Browse</li></a>
 						<li>My Rankits</li>
 						<li>New Rankit</li>
 					</ul>
@@ -105,6 +105,9 @@ require_once "db.php";
 	$sql = 'SELECT * FROM rankit';
 	$stmt = $pdo->query($sql);
 	$count = 0;
+	$first_name;
+	$last_name;
+
 	while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
 	{
 		//Retrieve User Information
@@ -114,26 +117,32 @@ require_once "db.php";
 			$userSQL = "SELECT * FROM users WHERE id = ".$row['user_id'];
 			$userSTMT = $pdo->query($userSQL);
 			$userRow = $userSTMT->fetch(PDO::FETCH_ASSOC);
-
-			//Retrieve Picture for Rankit
-			$imageQueryString = $row['title'];
-			$imageQueryString = str_replace(' ','%20',$imageQueryString);
-			$image_query = $url.$imageQueryString;
-
-			$json = get_url_contents($image_query);
-			$data = json_decode($json);
-			foreach ($data->responseData->results as $result) {
-		    $results[] = array('url' => $result->url, 'alt' => $result->title);
-			}
-
-			echo('<a href="index.php?id='.$row['id'].'">');
-				echo('<div class ="browseBox">');
-					echo('<img class="browseBox-pic" src='.$results[3]['url'].'>');
-					echo('<h4 class="browseBox-title">'.$row['title'].'</h4>');
-					echo('<span class="browseBox-author">By: '.$userRow['first_name'].' '.$userRow['last_name'].'</span>');
-				echo('</div>');
-			echo('</a>');
+			$first_name = $userRow['first_name'];
+			$last_name = $userRow['last_name'];
 		}
+		else {
+			$first_name = 'Anonymous';
+			$last_name = '';
+		}
+
+		//Retrieve Picture for Rankit
+		$imageQueryString = $row['title'];
+		$imageQueryString = str_replace(' ','%20',$imageQueryString);
+		$image_query = $url.$imageQueryString;
+
+		$json = get_url_contents($image_query);
+		$data = json_decode($json);
+		foreach ($data->responseData->results as $result) {
+	    $results[] = array('url' => $result->url, 'alt' => $result->title);
+		}
+
+		echo('<a href="index.php?id='.$row['id'].'">');
+			echo('<div class ="browseBox">');
+				echo('<img class="browseBox-pic" src='.$results[3]['url'].'>');
+				echo('<h4 class="browseBox-title">'.$row['title'].'</h4>');
+				echo('<span class="browseBox-author">By: '.$first_name.' '.$last_name.'</span>');
+			echo('</div>');
+		echo('</a>');
 	}
 
 	echo('					

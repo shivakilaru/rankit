@@ -6,6 +6,7 @@ body {
   	-webkit-transition: all 0.7s;
 }
 
+
 a {
 	text-decoration: none;
 	color: black;
@@ -20,6 +21,16 @@ li {
 	margin: 20px auto;
 	overflow: hidden;
 }
+
+.content-container {
+	transition: all 0.7s;
+  	-webkit-transition: all 0.7s;
+}
+
+.content-container.hidden {
+	opacity: 0;
+}
+
 
 #compare-ui, #results-ui {
 	display: none;
@@ -230,7 +241,7 @@ ul.navigation {
 	height:40px;
 }
 
-#titleComp {
+.title {
 	display: inline;
 	color: black;
 	height:40px;

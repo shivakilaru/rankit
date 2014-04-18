@@ -129,7 +129,7 @@ if (isset($_POST['title']) &&
 		':decisions'				=>	$_POST['decisionsStr'],
 		':decision_count'			=>	$_POST['decisionCount'],
 		':scores'					=>	$_POST['scoresStr'],
-		':final_scores'				=>	$_POST['finalScoreStr']
+		':final_scores'				=>	$_POST['finalScoresStr']
 	));			
 }
 

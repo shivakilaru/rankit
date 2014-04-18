@@ -29,7 +29,6 @@ require_once "db.php";
 	<body>
 
 		<?php
-			echo('<script src="js/rankit.js"></script>');
 			if (isset($_GET['id'])){
 				$sql = "SELECT * FROM rankit WHERE id = ".$_GET['id'];
 				$stmt = $pdo->query($sql);
@@ -84,7 +83,7 @@ require_once "db.php";
 				</div>
 
 				<ul class="navigation">
-					<li>Browse</li>
+					<a href="browse.php" style="float:left;"><li>Browse</li></a>
 					<li>My Rankits</li>
 					<li>New Rankit</li>
 				</ul>
@@ -99,7 +98,7 @@ require_once "db.php";
 
 
 
-			<div class="content-container">
+			<div class="content-container hidden">
 			
 				<!-- Screen 1: "Add UI" -Adding Options and Factors -->
 				<div id="add-ui">
@@ -161,7 +160,7 @@ require_once "db.php";
 
 					<div id= "title-wrapper">
 						<div class = "result-subheading" id="yourRankit">Your Rankit:</div>
-						<div id="titleComp"></div>
+						<div class="title"></div>
 					</div>
 
 					<div id="question">
@@ -198,7 +197,7 @@ require_once "db.php";
 				<div id="results-ui">
 					<div id= "title-wrapper">
 						<div class = "result-subheading" id="yourRankit">Your Rankit:</div>
-						<div id="titleComp">Pokemon</div>
+						<div class="title"></div>
 					</div>
 
 					<div class = "result-subheading">
