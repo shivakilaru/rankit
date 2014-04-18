@@ -223,6 +223,9 @@ require_once "db.php";
 					</br>
 					</br>
 
+					<div id="random">
+					</div>
+
 					<div class="result-subheading">
 						Breakdown:
 					</div>

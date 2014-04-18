@@ -21,6 +21,7 @@ var decisionCount = 0;
 
 var scores = {};
 var finalScores = {};
+var winners = new Array();
 
 var choice1, choice2;
 var decisionFactor;
@@ -146,6 +147,11 @@ $(document).ready(function() {
 	$("#choice-1").click(function() {
 		var winner = choice1;
 		var loser = choice2;
+
+		var decisionString = (choice1 + "." + choice2 + "." + decisionFactor);
+		decisions.push(decisionString);
+		decisionCount++;
+
 		updateScores(winner, loser, decisionFactor)
 		presentNewDecision();
 	});
@@ -154,6 +160,11 @@ $(document).ready(function() {
 	$("#choice-2").click(function() {		
 		var winner = choice2;
 		var loser = choice1;
+
+		var decisionString = (choice1 + "." + choice2 + "." + decisionFactor);
+		decisions.push(decisionString);
+		decisionCount++;
+
 		updateScores(winner, loser, decisionFactor)
 		presentNewDecision();
 	});
@@ -177,6 +188,7 @@ $(document).ready(function() {
 			alert("Ranking is complete.");
 			return;	
 		}
+		$("#random").text("");
 		presentNewDecision();
 		$("#results-ui").hide('slow');
 		$("#compare-ui").show('slow');
@@ -311,6 +323,7 @@ function startLogoutPolling() {
 
 function addItem(type) {
 	var item = $('#'+type+'-box').val();
+	item = item.replace(/^\s+/, '').replace(/\s+$/, '');
 	if (item === "") {
 	}
 	else if (item) {
@@ -412,7 +425,8 @@ function beginDeciding() {
 		scores[option] = {};
 		for (f in factorNames) {
 			var factor = factorNames[f];
-			scores[option][factor] = 500;
+			// OLD: scores[option][factor] = 500;
+			scores[option][factor] = 0;
 			console.log(option + " in " + factor + ": " + scores[option][factor]);
 		}
 	}
@@ -445,19 +459,34 @@ function presentNewDecision() {
 		var k = Math.floor(Math.random() * factorNames.length);
 		
 		progressPercentage = Math.round(100*(decisionCount/maxDecisions()));
-		var progressMessage = decisionCount + " comparisons made. Decision " +
-		"is " + progressPercentage + "% certain.";
+		
+		var progressMessage;
+		if (decisionCount == 1 ) {
+			progressMessage = "1 comparison made. Decision is "
+								 + progressPercentage + "% certain.";
+		}
+		else {
+			progressMessage = decisionCount + " comparisons made. Decision is " 
+								 + progressPercentage + "% certain.";
+		}
+		if (optionList[i].length>10) {
+			choice1 = optionList[i].substring(0, 9)+"...";
+		}
+		else {
+			choice1 = optionList[i];
+		}
+		if (optionList[j].length>10) {
+			choice2 = optionList[j].substring(0, 9)+"...";
+		}
+		else {
+			choice2 = optionList[j];
+		}
 
-
-		choice1 = optionList[i];
-		choice2 = optionList[j];
 		decisionFactor = factorNames[k];
 	} while (thisDecisionMadeAlready());
 
 	var decisionString = (choice1 + "." + choice2 + "." + decisionFactor);
 	console.log("New decision presented: " + decisionString);
-	decisions.push(decisionString);
-	decisionCount++;
 
 	$("#choice-1").text(choice1);
 	$("#choice-2").text(choice2);
@@ -467,11 +496,13 @@ function presentNewDecision() {
 	$("#progress-bar").width(progressPercentage+"%");
 }
 
-// Take 25% of loser's current factor points and give them to the winner.
+// OLD: Take 25% of loser's current factor points and give them to the winner.
+// NEW: Give 1 point to the winner.
 function updateScores(winner, loser, factor) {
-	var points = scores[loser][factor]*0.25;
-	scores[winner][factor] += points;
-	scores[loser][factor] -= points;
+	// var points = scores[loser][factor]*0.25;
+	// scores[winner][factor] += points;
+	// scores[loser][factor] -= points;
+	scores[winner][factor] += 1;
 	console.log(winner + " beats " + loser + " in " + factor + ". " +
 		winner + "'s new score for this factor: " + scores[winner][factor] + ". " +
 		loser + "'s new score for this factor: " + scores[loser][factor] 
@@ -514,6 +545,7 @@ function displayResults() {
 	$('#result').empty();
 	$('#ranked-results').empty();
 	$('#certainty-val').empty();
+	updateTitle();
 	
 	// Compute and display updated data
 	var winnerScore = 0;
@@ -526,11 +558,27 @@ function displayResults() {
 	for (var i = 0; i < optionList.length; i++) {
 		if (finalScores[optionList[i]] > winnerScore) {
 			winnerResult = optionList[i];
+			winners = [];
+			winners.push(optionList[i]);
 			winnerScore = finalScores[optionList[i]];
 		} 
+		else if (finalScores[optionList[i]] == winnerScore) {
+			winners.push(optionList[i]);
+		}
 	}
-	updateTitle();
-	$("#result").text(winnerResult);
+
+	// Is there one clear winnner?
+	if (winners.length == 1) {
+		winnerResult = winners[0];
+		$("#result").text(winnerResult);
+	}
+	// Break the tie otherwise
+	else {
+		winnerResult = winners[Math.floor(Math.random()*winners.length)];
+		$("#result").text(winnerResult+"*");
+		$("#random").text("* Rankit resulted in a tie. Your decision was randomly computed.");
+	}
+
 	$('#certainty-val').text(progressPercentage);
 
 	if (decisionCount == maxDecisions()) {
@@ -552,7 +600,8 @@ function displayGraph() {
 		var entryFactorScores = new Array();
 		for (f in factorNames) {
 			var factor = factorNames[f];
-			entryFactorScores.push(Math.floor(scores[option][factor]*factorWeights[f]));
+			// OLD: entryFactorScores.push(Math.floor(scores[option][factor]*factorWeights[f]));
+			entryFactorScores.push(scores[option][factor]*factorWeights[f]);
 		}
 		entry.push(entryFactorScores);
 		entry.push(option);
@@ -640,7 +689,6 @@ function choose(a,b) {
 
 // Will be used to calculate progress % and "Certainty" value.
 function maxDecisions() {
-	console.log(optionList.length);
 	return (choose(optionList.length, 2) * factorNames.length);	
 }
 

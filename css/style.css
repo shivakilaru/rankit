@@ -356,6 +356,13 @@ ul.navigation {
 	display: inline;
 }
 
+#random {
+	clear:both;
+	font-size: 15px;
+	font-weight: 300;
+	color: #5E5E5E;
+}
+
 .result-subheading {
 	margin-top: 30px;
 	font-size: 30px;
@@ -522,6 +529,7 @@ ul.navigation {
 
 .graphValuegraph {
 	font-weight: 300;
+	display: none;
 }
 
 
