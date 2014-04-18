@@ -522,12 +522,14 @@ ul.navigation {
  / /_/ / /  / /_/ / |/ |/ (__  )  __/
 /_.___/_/   \____/|__/|__/____/\___/ 
 
+# is a id
+. is a class
 =============================================== */
 
 .browseBox {
-	width: 160px;
-	height: 125px; 
-	font-size: 12px;
+	width: 29%;
+	height: 180px; 
+	font-size: 18px;
 	font-weight: bold;
 	border-style: solid;
 	border: 1px solid #e0e0e0;  
@@ -535,16 +537,17 @@ ul.navigation {
 	color: #5C5B5B;
 	display: inline-block;
 	box-shadow: 5px #e0e0e0;
+	margin: 4px;
 }
 
 .browseBox-pic{
-	max-height: 100px; 
-	width: 160px;
+	width: 100%;
+	height: 80%;
 }
 
 .browseBox-title{
-	font-size: 14px;
-	height: 17px;
+	font-size: 20px;
+	height: 25px;
 	overflow: hidden;
 	margin: 0;
 }
