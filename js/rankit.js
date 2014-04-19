@@ -330,17 +330,17 @@ function addItem(type) {
 
 		if (type == "option") {
 			$('#option-list').prepend(
-				"<li id='option-item'>" + item + 
-					"<a class='delete-option'></a>" + 
-				"</li>"
+				"<li id='option-item'>" + "<A class='opt-name'>" + item + "</A>"+ 
+						"<a class='delete-option'></a>" + 
+					"</li>"
 			);
 		}
 		if (type == "factor") {
 			$('#factor-list').prepend(
-				"<li id='factor-item'>" + item + 
-					"<a class='delete-factor'></a>" + 
-					"<input type='range' min='0' max='50' step='1' value='25' class='factor-slider'/>" +
-				"</li>"
+				"<li id='factor-item'>" + "<A class='fact-name'>" + item + "</A>" + 
+						"<a class='delete-factor'></a>" + 
+						"<input type='range' min='0' max='50' step='1' value='25' class='factor-slider'/>" +
+					"</li>"
 			);
 		}
 
@@ -426,7 +426,7 @@ function beginDeciding() {
 		for (f in factorNames) {
 			var factor = factorNames[f];
 			// OLD: scores[option][factor] = 500;
-			scores[option][factor] = 0;
+			scores[option][factor] = .1; //makes it so there is always a graph for every option
 			console.log(option + " in " + factor + ": " + scores[option][factor]);
 		}
 	}
@@ -469,27 +469,29 @@ function presentNewDecision() {
 			progressMessage = decisionCount + " comparisons made. Decision is " 
 								 + progressPercentage + "% certain.";
 		}
-		if (optionList[i].length>10) {
-			choice1 = optionList[i].substring(0, 9)+"...";
-		}
-		else {
-			choice1 = optionList[i];
-		}
-		if (optionList[j].length>10) {
-			choice2 = optionList[j].substring(0, 9)+"...";
-		}
-		else {
-			choice2 = optionList[j];
-		}
+
+		choice1 = optionList[i];
+		choice2 = optionList[j];
 
 		decisionFactor = factorNames[k];
+
 	} while (thisDecisionMadeAlready());
 
 	var decisionString = (choice1 + "." + choice2 + "." + decisionFactor);
 	console.log("New decision presented: " + decisionString);
 
-	$("#choice-1").text(choice1);
-	$("#choice-2").text(choice2);
+	if (choice1.length>10) {
+		$("#choice-1").text(choice1.substring(0,9)+"...");
+	}
+	else {
+		$("#choice-1").text(choice1);
+	}
+	if (choice2.length>10) {
+		$("#choice-2").text(choice2.substring(0,9)+"...");
+	}
+	else {
+		$("#choice-2").text(choice2);
+	}
 	$("#decision-factor").text(decisionFactor+"?");
 	$("#choices").show('fast');
 	$("#progress-message").text(progressMessage);

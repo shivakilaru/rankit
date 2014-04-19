@@ -108,24 +108,24 @@ require_once "db.php";
 					</div>
 
 					<div class="get-title">
-						<h2>Title</h2>
-					<input type="text" id="title-box" name="title" value=
+						<h2 id="title">Title</h2>
+						<input type="text" id="title-box" maxlength=44 name="title" value=
 						"Pokemon"/>
 
 					</div>
 
 					<div class="add-options">
 
-						<h2>Options</h2>
+						<h2 id="options">Options</h2>
 
 						<input type="text" id="option-box" name="option"/>
 						<a id="submit-option"></a>
 
 						<h4 class="list-header">Current List</h4>
 						<ul id="option-list">
-							<li id="option-item">Charmander<a class="delete-option"></a></li>
-							<li id="option-item">Bulbasaur<a class="delete-option"></a></li>
-							<li id="option-item">Squirtle<a class="delete-option"></a></li>
+							<li id="option-item"><A class="opt-name">Charmander</A><a class="delete-option"></a></li>
+							<li id="option-item"><A class="opt-name">Bulbasaur</A><a class="delete-option"></a></li>
+							<li id="option-item"><A class="opt-name">Squirtle</A><a class="delete-option"></a></li>
 						</ul>
 
 
@@ -133,16 +133,16 @@ require_once "db.php";
 
 					<div class="add-factors">
 
-						<h2>Factors</h2>
+						<h2 id="factors">Factors</h2>
 
 						<input type="text" id="factor-box" name="factor"/>
 						<a id="submit-factor"></a>
 
 						<h4 class="list-header">Current List</h4>
 						<ul id="factor-list">
-							<li id="factor-item">Speed<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
-							<li id="factor-item">Defense<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
-							<li id="factor-item">Attack<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
+							<li id="factor-item"><A class="fact-name">Speed</A><a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
+							<li id="factor-item"><A class="fact-name">Defense</A><a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
+							<li id="factor-item"><A class="fact-name">Attack</A><a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
 						</ul>
 
 					</div>
@@ -153,14 +153,19 @@ require_once "db.php";
 
 				</div>
 
+				<div id="footer">
+					<!-- just some cushion whitespace at the bottom.  could add text later -->
+					</br>
+				</div>
+
 
 
 				<!-- Screen 2: "Compare UI" - Comparisons -->
 				<div id="compare-ui">
 
 					<div id= "title-wrapper">
-						<div class = "result-subheading" id="yourRankit">Your Rankit:</div>
-						<div class="title"></div>
+						<div id="yourRankit">Your Rankit:</div>
+						<div id="titleComp"></div>
 					</div>
 
 					<div id="question">
@@ -196,8 +201,8 @@ require_once "db.php";
 				<!-- Screen 3: "Results UI" - Results -->
 				<div id="results-ui">
 					<div id= "title-wrapper">
-						<div class = "result-subheading" id="yourRankit">Your Rankit:</div>
-						<div class="title"></div>
+						<div id = "yourRankit">Your Rankit:</div>
+						<div id="titleComp">Pokemon</div>
 					</div>
 
 					<div class = "result-subheading">

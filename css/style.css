@@ -91,9 +91,13 @@ ul.navigation {
 	margin-top: 30px;
 }
 
+#title, #options, #factors {
+	margin-bottom: 8px;
+}
+
 .add-options, .add-factors {
 	width: 48%;
-	margin-top: 40px;
+	margin-top: 20px;
 	float: left;
 	min-height: 300px;
 }
@@ -142,6 +146,7 @@ ul.navigation {
 	padding: 5px;
 	width: 85%;
 	position: relative;
+	overflow: scroll;
 }
 
 #option-list > li:hover, #factor-list > li:hover {
@@ -150,6 +155,19 @@ ul.navigation {
 
 #option-list > li:hover .delete-option, #factor-list > li:hover .delete-factor {
 	display: block;
+}
+
+
+#option-list > li .opt-name {
+	float: left;
+	max-width: 350px;
+	overflow: scroll;
+}
+
+#factor-list > li .fact-name {
+	float: left;
+	max-width: 200px;
+	overflow: scroll;
 }
 
 .delete-option, .delete-factor {
@@ -233,19 +251,22 @@ ul.navigation {
 =========================================================== */
 
 #title-wrapper{
-	height: 40px;
+	height: 30px;
 }
 
 #yourRankit {
 	display: inline;
-	height:40px;
+	margin-top: 30px;
+	font-size: 20px;
+	font-weight: 300;
+	color: #5E5E5E;
 }
 
-.title {
+#titleComp {
 	display: inline;
 	color: black;
-	height:40px;
-	font-size: 30px;
+	height:30px;
+	font-size: 20px;
 	font-weight: 700;
 	margin-left: 5px;
 }
@@ -263,6 +284,7 @@ ul.navigation {
 	font-size: 80px;
 	font-weight: 900;
 	color: #686868;
+	overflow: scroll;
 }
 
 .choice-container {
@@ -287,8 +309,9 @@ ul.navigation {
 	display: inline;
 	position: relative;
 	border-radius: 5px;
-	padding: 30px 80px;
+	padding: 30px 40px;
 	margin: 20px;
+	max-width: 180px;
 	transition: all 0.3s;
   	-webkit-transition: all 0.3s;
 }
@@ -353,7 +376,9 @@ ul.navigation {
 	font-weight: 900;
 	color: #686868;
 	line-height: 90px;
-	display: inline;
+	max-width: 80%;
+	overflow: scroll;
+float: left;
 }
 
 #random {
@@ -377,6 +402,7 @@ ul.navigation {
 
 #certainty-container {
 	margin-top: 13px;
+	max-width: 10%;
 	display: inline;
 	float: right;
 }
@@ -514,6 +540,7 @@ ul.navigation {
 	font-weight: bold;
 	padding: 10px 0;
 	color: #686868;
+	overflow: scroll;
 }
 
 .legendLabelgraph {
