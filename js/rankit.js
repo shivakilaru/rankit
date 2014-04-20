@@ -188,7 +188,7 @@ $(document).ready(function() {
 			alert("Ranking is complete.");
 			return;	
 		}
-		$("#random").text("");
+		$("#tiebreaker-disclaimer").text("");
 		presentNewDecision();
 		$("#results-ui").hide('slow');
 		$("#compare-ui").show('slow');
@@ -590,7 +590,7 @@ function displayResults() {
 	else {
 		winnerResult = winners[Math.floor(Math.random()*winners.length)];
 		$("#result").text(winnerResult+"*");
-		$("#random").text("* Rankit resulted in a tie. Your decision was randomly computed.");
+		$("#tiebreaker-disclaimer").text("* Rankit resulted in a tie. Your decision was randomly computed.");
 	}
 
 	$('#certainty-val').text(progressPercentage);

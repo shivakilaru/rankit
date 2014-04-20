@@ -184,7 +184,7 @@ session_start();
 					</br>
 					</br>
 
-					<div id="random">
+					<div id="tiebreaker-disclaimer">
 					</div>
 
 					<div class="result-subheading">
