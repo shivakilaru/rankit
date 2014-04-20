@@ -98,6 +98,23 @@ ul.navigation {
 
 
 
+/* === Everything that needs truncation === */
+#option-list > li, 
+#factor-list > li,
+#option-list > li .opt-name,
+#factor-list > li .fact-name,
+#decision-factor,
+.choice-container,
+#result,
+.graphLabelgraph {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+/* ====== */
+
+
+
 /* ================================
     ___       __    __   __  ______
    /   | ____/ /___/ /  / / / /  _/
@@ -166,7 +183,6 @@ ul.navigation {
 	padding: 5px;
 	width: 85%;
 	position: relative;
-	overflow: scroll;
 }
 
 #option-list > li:hover, #factor-list > li:hover {
@@ -181,13 +197,11 @@ ul.navigation {
 #option-list > li .opt-name {
 	float: left;
 	max-width: 350px;
-	overflow: scroll;
 }
 
 #factor-list > li .fact-name {
 	float: left;
 	max-width: 200px;
-	overflow: scroll;
 }
 
 .delete-option, .delete-factor {
@@ -304,12 +318,10 @@ ul.navigation {
 	font-size: 80px;
 	font-weight: 900;
 	color: #686868;
-	overflow: scroll;
 }
 
 .choice-container {
 	height: 200px;
-	overflow: hidden;
 }
 
 #choices {
@@ -395,10 +407,9 @@ ul.navigation {
 	font-size: 90px;
 	font-weight: 900;
 	color: #686868;
-	line-height: 90px;
+	line-height: 100px;
 	max-width: 80%;
-	overflow: scroll;
-float: left;
+	float: left;
 }
 
 #random {
@@ -569,7 +580,6 @@ float: left;
 	font-weight: bold;
 	padding: 10px 0;
 	color: #686868;
-	overflow: scroll;
 }
 
 .legendLabelgraph {
