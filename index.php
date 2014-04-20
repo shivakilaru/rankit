@@ -79,9 +79,9 @@ session_start();
 
 						<h4 class="list-header">Current List</h4>
 						<ul id="option-list">
-							<li id="option-item"><A class="opt-name">Charmander</A><a class="delete-option"></a></li>
-							<li id="option-item"><A class="opt-name">Bulbasaur</A><a class="delete-option"></a></li>
-							<li id="option-item"><A class="opt-name">Squirtle</A><a class="delete-option"></a></li>
+							<li id="option-item">Charmander<a class="delete-option"></a></li>
+							<li id="option-item">Bulbasaur<a class="delete-option"></a></li>
+							<li id="option-item">Squirtle<a class="delete-option"></a></li>
 						</ul>
 
 
@@ -96,9 +96,9 @@ session_start();
 
 						<h4 class="list-header">Current List</h4>
 						<ul id="factor-list">
-							<li id="factor-item"><A class="fact-name">Speed</A><a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
-							<li id="factor-item"><A class="fact-name">Defense</A><a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
-							<li id="factor-item"><A class="fact-name">Attack</A><a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
+							<li id="factor-item">Speed<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
+							<li id="factor-item">Defense<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
+							<li id="factor-item">Attack<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
 						</ul>
 
 					</div>

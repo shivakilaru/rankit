@@ -101,8 +101,6 @@ ul.navigation {
 /* === Everything that needs truncation === */
 #option-list > li, 
 #factor-list > li,
-#option-list > li .opt-name,
-#factor-list > li .fact-name,
 #decision-factor,
 .choice-container,
 #result,
@@ -191,17 +189,6 @@ ul.navigation {
 
 #option-list > li:hover .delete-option, #factor-list > li:hover .delete-factor {
 	display: block;
-}
-
-
-#option-list > li .opt-name {
-	float: left;
-	max-width: 350px;
-}
-
-#factor-list > li .fact-name {
-	float: left;
-	max-width: 200px;
 }
 
 .delete-option, .delete-factor {

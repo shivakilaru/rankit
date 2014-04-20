@@ -342,14 +342,14 @@ function addItem(type) {
 
 		if (type == "option") {
 			$('#option-list').prepend(
-				"<li id='option-item'>" + "<A class='opt-name'>" + item + "</A>"+ 
+				"<li id='option-item'>" + item + 
 						"<a class='delete-option'></a>" + 
 					"</li>"
 			);
 		}
 		if (type == "factor") {
 			$('#factor-list').prepend(
-				"<li id='factor-item'>" + "<A class='fact-name'>" + item + "</A>" + 
+				"<li id='factor-item'>" + item + 
 						"<a class='delete-factor'></a>" + 
 						"<input type='range' min='0' max='50' step='1' value='25' class='factor-slider'/>" +
 					"</li>"
