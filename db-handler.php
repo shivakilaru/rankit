@@ -1,11 +1,12 @@
 <?php
 require_once "db.php";
+session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL ^ E_NOTICE);
 
 echo("<style>body{font-family:sans-serif;}td{padding:10px;}</style>");
 
-
+echo('USER ID: '.$_SESSION['user_id']);
 
 
 /* ===================================================================
@@ -18,8 +19,14 @@ echo("<style>body{font-family:sans-serif;}td{padding:10px;}</style>");
 ===================================================================*/
 
 //Check if adding user to database
-if (isset($_POST['google_id']) && isset($_POST['first']) && isset($_POST['last']))
+if (isset($_POST['google_id']) && 
+	isset($_POST['first']) && 
+	isset($_POST['last']) && 
+	isset($_POST['loggedIn']))
 {
+	//Add login status to session
+	$_SESSION['loggedIn'] = true;
+
 	//Check that user isn't already in database
 	$sql = "SELECT * FROM users WHERE google_id LIKE ".$_POST['google_id'];
 	$query_sql = $pdo->query($sql);
@@ -34,6 +41,13 @@ if (isset($_POST['google_id']) && isset($_POST['first']) && isset($_POST['last']
 			':first' 		=>	$_POST['first'],
 			':last' 		=> $_POST['last']
 		));
+		$_SESSION['user_id'] = $pdo->lastInsertId;
+		$_SESSION['first_name'] = $_POST['first'];
+	}
+	else {
+		$row = $query_sql->fetch(PDO::FETCH_ASSOC);
+		$_SESSION['user_id'] 	= $row['id'];
+		$_SESSION['first_name'] = $row['first_name']; 
 	}
 }
 

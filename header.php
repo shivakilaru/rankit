@@ -1,5 +1,6 @@
 <?php
 require_once "db.php";
+session_start();
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -36,14 +37,27 @@ require_once "db.php";
 
 			<ul class="navigation">
 				<a href="browse.php" style="float:left;"><li>Browse</li></a>
-				<li>My Rankits</li>
-				<li>New Rankit</li>
+				<a href="myrankits.php" style="float:left;"><li>My Rankits</li></a>
+				<a href="index.php" style="float:left;"><li>New Rankit</li></a>
 			</ul>
 
 			<div class="login-container">
 				<a id="login">Login</a>
+				<div id="loggedInMessage" hidden></div>
+				<div id="drop-down-triangle" hidden></div>
 			</div>
 
 		</div>
 
 		<hr/>
+
+<?php
+
+if (isset($_SESSION['loggedIn'])) {
+	echo('
+		<script type="text/javascript">
+			var firstName = "'.$_SESSION['first_name'].'";
+			setLoggedIn(firstName);
+		</script>
+	');
+}

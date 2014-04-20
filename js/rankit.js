@@ -274,10 +274,10 @@ function getUserInfo() {
       url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
       data: null,
       success: function(resp) {
-          user    =   resp;
-          console.log(user);
-          addUserToDB(user);
-          //$('#login').text('Welcome ' + user.name);
+         user    =   resp;
+         console.log(user);
+         addUserToDB(user);
+			setLoggedIn();
           //$('#imgHolder').attr('src', user.picture);
       },
       dataType: "jsonp"
@@ -288,7 +288,7 @@ function addUserToDB(user) {
 	var xmlhttp = new XMLHttpRequest();
 	var url = 'db-handler.php';
 	var vars = 'google_id='+user['id']+'&first='+user['given_name']+
-					'&last='+user['family_name'];
+					'&last='+user['family_name']+'&loggedIn=true';
 	xmlhttp.open('POST', url, true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send(vars);
@@ -314,7 +314,13 @@ function startLogoutPolling() {
   //$('#imgHolder').attr('src', 'none.jpg');
 }
 
-
+function setLoggedIn(firstName) {
+	loggedIn = true;
+	$('#login').hide();
+	$('#loggedInMessage').text('Welcome, ' + firstName);
+	$('#loggedInMessage').show();
+	$('#drop-down-triangle').show();
+}
 
 
 

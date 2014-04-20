@@ -1,5 +1,6 @@
 <?php
 require_once "header.php";
+session_start();
 
 	/* =======================================================================
 	    ____  __  ______     ______                 __  _                 
@@ -44,7 +45,6 @@ require_once "header.php";
 
 	$sql = 'SELECT * FROM rankit';
 	$stmt = $pdo->query($sql);
-	$count = 0;
 	$first_name;
 	$last_name;
 

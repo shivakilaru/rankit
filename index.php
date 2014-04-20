@@ -1,9 +1,11 @@
 <?php
 require_once "header.php";
+session_start();
 ?>
+	
 	<body>
-
 		<?php
+
 			if (isset($_GET['id'])){
 				$sql = "SELECT * FROM rankit WHERE id = ".$_GET['id'];
 				$stmt = $pdo->query($sql);
