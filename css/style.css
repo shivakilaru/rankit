@@ -517,11 +517,20 @@ float: left;
 	clear: both;
 }
 
-#save-rankit, #share-rankit {
+#save-rankit-container, #share-rankit {
 	float: left;
-	cursor: pointer;
 	margin-right: 10px;
+}
+
+#save-rankit, #share-rankit {
 	background-color: #1DAB0A;
+	cursor: pointer;
+}
+
+#logInPrompt {
+	width: 200px;
+	color: #FF0000;
+	font-size: 17px;
 }
 
 /* ==== Graph Stuff ==== */

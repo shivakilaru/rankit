@@ -192,7 +192,10 @@ require_once "header.php";
 					<div id="graph">
 					</div>
 
-					<div id="save-rankit" class="button" name="save-rankit" value="Save">Save</div>
+					<div id="save-rankit-container">
+						<div id="save-rankit" class="button" name="save-rankit" value="Save">Save</div>
+						<div id="logInPrompt" hidden>You must login in order to save a RankIt.</div>
+					</div>
 					<div id="share-rankit" class="button" name="share-rankit" value="Share">Share</div>
 
 				</div>

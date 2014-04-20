@@ -196,7 +196,13 @@ $(document).ready(function() {
 
 	// When the user clicks "Save"
 	$("#save-rankit").click(function() {
-		saveCurrentRankit();
+		if (loggedIn) {
+			saveCurrentRankit();
+		}
+		else {
+			$("#logInPrompt").show();
+		}
+		
 	});
 
 });
