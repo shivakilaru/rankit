@@ -119,7 +119,7 @@ require_once "header.php";
 
 					<div id= "title-wrapper">
 						<div id="yourRankit">Your Rankit:</div>
-						<div id="titleComp"></div>
+						<div class="rankitTitle"></div>
 					</div>
 
 					<div id="question">
@@ -156,7 +156,7 @@ require_once "header.php";
 				<div id="results-ui">
 					<div id= "title-wrapper">
 						<div id = "yourRankit">Your Rankit:</div>
-						<div id="titleComp">Pokemon</div>
+						<div class="rankitTitle"></div>
 					</div>
 
 					<div class = "result-subheading">

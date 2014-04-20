@@ -353,7 +353,7 @@ function addItem(type) {
 }
 
 function updateTitle() {
-	$('.title').text(title);
+	$('.rankitTitle').text(title);
 }
 
 
