@@ -7,6 +7,11 @@
 
 ================================== */
 
+var rankitId = 0;
+var currentUserID = 0;
+var currentGroupId = 0;
+var isOwner = 1;
+
 var title;
 var winnerResult;
 var progressPercentage;
@@ -26,48 +31,6 @@ var winners = new Array();
 var choice1, choice2;
 var decisionFactor;
 
-
-
-function reloadRankit(in_title, in_winner, in_progressPercentage, in_options, in_noFactors, in_factorNames, in_factorWeights, in_decisions, in_decisionCount, in_scores, in_finalScores) {
-	scores = {};
-	title = in_title;
-	winner = in_winner;
-	progressPercentage = parseInt(in_progressPercentage);
-	optionList = in_options.split(',');
-	if (in_noFactors == '1') noFactors = true;
-	else noFactors = false;
-	factorNames = in_factorNames.split(',');
-	factorWeights = in_factorWeights.split(',');
-	decisions = in_decisions.split(',');
-	decisionCount = parseInt(in_decisionCount);
-	in_scores = in_scores.split(',');
-
-	console.log(optionList);
-
-	for (var i = 0; i< optionList.length; i++) {
-		console.log("====UPDATING SCORES FOR NEW PERSON=====: " + i);
-		var factorIndex = 0;
-		for (var j=(i*factorNames.length); j<((i+1)*factorNames.length); j++) {
-			console.log("====UPDATING SCORES FOR NEW FACTOR=====: " + j);
-			var option = optionList[i];
-			var factor = factorNames[factorIndex];
-			var score = in_scores[j];
-			if (scores[option] == undefined) {
-				scores[option] = {};
-			}
-			console.log(option + " / " + factor); 
-			scores[option][factor] = score;
-			console.log(scores);
-			factorIndex++;
-		}
-	}
-
-	finalScores = in_finalScores.split(',');
-
-	displayResults();
-	$('#add-ui').hide();
-	$("#results-ui").show('slow');
-}
 
 
 
@@ -196,13 +159,50 @@ $(document).ready(function() {
 
 	// When the user clicks "Save"
 	$("#save-rankit").click(function() {
-		if (loggedIn) {
-			saveCurrentRankit();
+		checkIfLoggedIn().done(function(loggedInStatus) {
+			console.log(loggedInStatus);
+			if ((loggedInStatus != undefined) && (loggedInStatus != 0)) {
+				currentUserID = loggedInStatus;
+				saveCurrentRankit();
+				alert("Rankit saved!");
+			}
+			else {
+				alert('You must log in to save a Rankit');
+			}
+		}).fail(function(x) {
+			console.log("Error: " + x);
+		});
+	});
+
+	// When the user clicks "Save"
+	$("#share-rankit").click(function() {
+		checkIfLoggedIn().done(function(loggedInStatus) {
+			console.log(loggedInStatus);
+			if ((loggedInStatus != undefined) && (loggedInStatus != 0)) {
+				saveCurrentRankit();
+				var shareUrl = "http://shivakilaru.com/rankit?take=" + currentGroupId;
+				alert("Share this link with friends: " + shareUrl);
+			}
+			else {
+				alert('You must log in to share a Rankit');
+			}
+		}).fail(function(x) {
+			console.log("Error: " + x);
+		});
+	});
+
+	$(".indv-rankit-btn").click(function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+			var groupId = ($(this).attr('data-groupid'));
+			loadGroupRankit(groupId);
 		}
 		else {
-			$("#logInPrompt").show();
+			$(".indv-rankit-btn.selected").removeClass('selected');
+			$(this).addClass('selected');
+			var indvId = ($(this).attr('data-id'));
+			loadSubRankit(indvId);
 		}
-		
 	});
 
 });
@@ -225,7 +225,7 @@ var OAUTHURL	=  'https://accounts.google.com/o/oauth2/auth?';
 var VALIDURL	=  'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
 var SCOPE    	=  'https://www.googleapis.com/auth/userinfo.profile ';
 var CLIENTID  	=  '406950378888.apps.googleusercontent.com';
-var REDIRECT  	=  'http://dkoleanb.byethost8.com/RankIt/oauth.html';
+var REDIRECT  	=  'http://shivakilaru.com/rankit/oauth.html';
 var TYPE      	=  'token';
 var _url      	=	OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + 
 						'&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
@@ -236,6 +236,7 @@ var user;
 var loggedIn    =   false;
 
 function loginClicked() {
+	// fakeLogin();
 	var win = window.open(_url, "windowname1", 'width=800, height=600'); 
 	var pollTimer = window.setInterval(function() { 
 		try {
@@ -319,7 +320,40 @@ function setLoggedIn(firstName) {
 	$('#login').hide();
 	$('#loggedInMessage').text('Welcome, ' + firstName);
 	$('#loggedInMessage').show();
-	$('#drop-down-triangle').show();
+}
+
+function fakeLogin() {
+	$.ajax({
+      url: 'php/ajax-rankit.php?fakeLogin',
+	    type: 'GET',
+	    dataType: "json",
+	    success: function(resp) {
+        	alert(resp);
+      },
+	});
+}
+
+function fakeLogout() {
+	$.ajax({
+      url: 'php/ajax-rankit.php?fakeLogout',
+	    type: 'GET',
+	    dataType: "json",
+	    success: function(resp) {
+        	alert(resp);
+      },
+	});
+}
+
+function checkIfLoggedIn() {
+	return $.ajax({
+     	url: 'php/ajax-rankit.php?isLoggedIn',
+	    type: 'GET',
+	    dataType: "json",
+	    success: function(resp) {
+        	alert(resp);
+        }
+
+	});
 }
 
 
@@ -438,7 +472,7 @@ function beginDeciding() {
 		for (f in factorNames) {
 			var factor = factorNames[f];
 			// OLD: scores[option][factor] = 500;
-			scores[option][factor] = .1; //makes it so there is always a graph for every option
+			scores[option][factor] = .3; //makes it so there is always a graph for every option
 			console.log(option + " in " + factor + ": " + scores[option][factor]);
 		}
 	}
@@ -492,14 +526,14 @@ function presentNewDecision() {
 	var decisionString = (choice1 + "." + choice2 + "." + decisionFactor);
 	console.log("New decision presented: " + decisionString);
 
-	if (choice1.length>10) {
-		$("#choice-1").text(choice1.substring(0,9)+"...");
+	if (choice1.length>15) {
+		$("#choice-1").text(choice1.substring(0,15)+"...");
 	}
 	else {
 		$("#choice-1").text(choice1);
 	}
-	if (choice2.length>10) {
-		$("#choice-2").text(choice2.substring(0,9)+"...");
+	if (choice2.length>15) {
+		$("#choice-2").text(choice2.substring(0,15)+"...");
 	}
 	else {
 		$("#choice-2").text(choice2);
@@ -560,6 +594,11 @@ function displayResults() {
 	$('#ranked-results').empty();
 	$('#certainty-val').empty();
 	updateTitle();
+
+	if (currentGroupId == 0) {
+		currentGroupId = createId();
+		console.log(currentGroupId);
+	}
 	
 	// Compute and display updated data
 	var winnerScore = 0;
@@ -590,7 +629,7 @@ function displayResults() {
 	else {
 		winnerResult = winners[Math.floor(Math.random()*winners.length)];
 		$("#result").text(winnerResult+"*");
-		$("#tiebreaker-disclaimer").text("* Rankit resulted in a tie. Your decision was randomly computed.");
+		$("#tiebreaker-disclaimer").text("* Rankit resulted in a tie. The decision was randomly computed.");
 	}
 
 	$('#certainty-val').text(progressPercentage);
@@ -674,6 +713,11 @@ function displayGraph() {
 	}
 }
 
+function hideRankitCreatorOptions() {
+	$('#finish-ranking').hide();
+	$('.post-rankit-actions').hide();
+}
+
 
 
 
@@ -728,6 +772,17 @@ function thisDecisionMadeAlready() {
 	return false;
 }
 
+// Generates a string of six random characters.
+function createId()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i=0; i < 6; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+}
+
 
 
 
@@ -763,7 +818,11 @@ function saveCurrentRankit() {
 	finalScoresStr = finalScoresStr.substring(0,finalScoresStr.length-1); 
 
 	// Store important variables to recreate Rankit
-	var vars = 	'title='+title+
+	var vars = 	'id='+rankitId+
+				'&userId='+currentUserID+
+				'&title='+title+
+				'&groupId='+currentGroupId+
+				'&isOwner='+isOwner+
 				'&winner='+winnerResult+
 				'&progressPercentage='+progressPercentage+
 				'&optionStr='+optionStr+
@@ -776,9 +835,10 @@ function saveCurrentRankit() {
 				'&finalScoresStr='+finalScoresStr;
 
 	console.log(vars);
+	console.log("ID is " + rankitId);
 
 	$.ajax({
-	    url: 'db-handler.php',
+	    url: 'php/ajax-rankit.php',
 	    data: vars,
 	    cache: false,
 	    type: 'POST',
@@ -787,6 +847,7 @@ function saveCurrentRankit() {
 	    success: function(data){
 	 		window.console && console.log("POST success"); 
 	    	window.console && console.log(data);
+	    	// window.location.href = 'browse.php';
 	    },
 	    error: function (jqXHR, textStatus, errorThrown) {
 	        console.log("ERROR: " + jqXHR.responseText);
@@ -796,7 +857,297 @@ function saveCurrentRankit() {
             console.log(result);
         }
 	  });
+}
 
-	alert("Rankit saved!");
+
+
+
+
+/* ==============================================================
+    __                    __   ____              __   _ __      
+   / /   ____  ____ _____/ /  / __ \____ _____  / /__(_) /______
+  / /   / __ \/ __ `/ __  /  / /_/ / __ `/ __ \/ //_/ / __/ ___/
+ / /___/ /_/ / /_/ / /_/ /  / _, _/ /_/ / / / / ,< / / /_(__  ) 
+/_____/\____/\__,_/\__,_/  /_/ |_|\__,_/_/ /_/_/|_/_/\__/____/  
+                                                                
+================================================================= */
+
+
+function loadPersonalRankit(id) {
+	$('#add-ui').hide();
+	checkIfLoggedIn().done(function(loggedInStatus) {
+		$.ajax({
+		    url: 'php/ajax-rankit.php?id=' + id,
+		    type: 'GET',
+		    dataType: "json",
+		    success: function(data){
+		    	console.log(data);
+		    	rankitId = data['id'];
+		    	scores = {};
+				title = data['title'];
+				winner = data['winner'];
+				progressPercentage = parseInt(data['progress_percentage']);
+				optionList = data['options'].split(',');
+				if (data['no_factors'] == '1') noFactors = true;
+				else noFactors = false;
+				factorNames = data['factor_names'].split(',');
+				factorWeights = data['factor_weights'].split(',');
+				decisions = data['decisions'].split(',');
+				decisionCount = parseInt(data['decision_count']);
+				in_scores = data['scores'].split(',');
+
+				console.log(optionList);
+
+				for (var i = 0; i< optionList.length; i++) {
+					var factorIndex = 0;
+					for (var j=(i*factorNames.length); j<((i+1)*factorNames.length); j++) {
+						var option = optionList[i];
+						var factor = factorNames[factorIndex];
+						var score = in_scores[j];
+						if (scores[option] == undefined) {
+							scores[option] = {};
+						}
+						console.log(option + " / " + factor); 
+						scores[option][factor] = score;
+						console.log(scores);
+						factorIndex++;
+					}
+				}
+
+				if (loggedInStatus != data['user_id']) {
+					hideRankitCreatorOptions();
+				}
+				
+				displayResults();
+				$("#results-ui").show('slow');
+		    },
+		    error: function (jqXHR, textStatus, errorThrown) {
+		        console.log("ERROR: " + jqXHR.responseText);
+		    },
+		    failure: function(result) {
+	            console.log("FAILED");
+	            console.log(result);
+	        }
+		});
+		return "CHYEA";
+	}).fail(function(x) {
+		console.log("Error: " + x);
+	});
+}
+
+
+function loadGroupRankit(groupid) {
+	$('#add-ui').hide();
+	checkIfLoggedIn().done(function(loggedInStatus) {
+		$.ajax({
+		    url: 'php/ajax-rankit.php?groupid=' + groupid,
+		    type: 'GET',
+		    dataType: "json",
+		    success: function(data){
+		    	console.log(data);
+
+		    	var compositeScores = new Array();
+		    	var totalUsers = data.length;
+		    	for (var i = 0; i<data.length; i++) {
+		    		console.log("Scores for: " + data[i]["first_name"] + " " + data[i]["last_name"] + ": " + data[i]['scores']);
+		    		var userScores = data[i]['scores'].split(',');
+
+		    		// Sum up total scores and update compositeScores array
+		    		if (compositeScores.length == 0) {
+		    			for (j in userScores) {
+		    				compositeScores.push(parseFloat(userScores[j]));
+		    			}
+		    		}
+		    		else {
+		    			for (j in userScores) {
+		    				compositeScores[j] += parseFloat(userScores[j]);
+		    			}
+		    		}
+		    	}
+		    	// Average each sum in the compositeScores array
+		    	for (k in compositeScores) {
+		    		compositeScores[k] = compositeScores[k] / totalUsers;
+		    	}
+		    	console.log("Averaged scores: " + compositeScores);
+
+		    	// Convert this data into a "normal" rankit
+		    	id = data[0]['id'];
+		    	scores = {};
+				title = data[0]['title'];
+				winner = "";
+				progressPercentage = parseInt(data[0]['progress_percentage']);
+				optionList = data[0]['options'].split(',');
+				if (data[0]['no_factors'] == '1') noFactors = true;
+				else noFactors = false;
+				factorNames = data[0]['factor_names'].split(',');
+				factorWeights = data[0]['factor_weights'].split(',');
+				decisions = [];
+				$('#certainty-container').hide();
+				decisionCount = parseInt(data['decision_count']);
+				// in_scores = data['scores'].split(',');
+
+				console.log(optionList);
+
+				for (var i = 0; i< optionList.length; i++) {
+					var factorIndex = 0;
+					for (var j=(i*factorNames.length); j<((i+1)*factorNames.length); j++) {
+						var option = optionList[i];
+						var factor = factorNames[factorIndex];
+						var score = compositeScores[j];
+						if (scores[option] == undefined) {
+							scores[option] = {};
+						}
+						scores[option][factor] = score;
+						factorIndex++;
+					}
+				}
+
+				// Add individual user buttons if this is the first time this Group Rankit has been loaded
+				if ($('#group-rankit-links').children().length == 0){
+					for (var u = 0; u < totalUsers; u++) {
+						var buttonDiv = '<div class="button indv-rankit-btn deselected" data-id="' + data[u]['id'] + '" data-groupid="' + data[u]['group_id'] + '">' + data[u]['first_name'] + ' ' + data[u]['last_name'][0] + '.</div>';
+						$('#group-rankit-links').prepend(buttonDiv);
+					}
+
+					// Add click handlers
+					$(".indv-rankit-btn").click(function() {
+						if ($(this).hasClass('selected')) {
+							$(this).removeClass('selected');
+							var groupId = ($(this).attr('data-groupid'));
+							loadGroupRankit(groupId);
+						}
+						else {
+							$(".indv-rankit-btn.selected").removeClass('selected');
+							$(this).addClass('selected');
+							var indvId = ($(this).attr('data-id'));
+							loadSubRankit(indvId);
+						}
+					});
+				}
+
+				if (loggedInStatus != data[0]['user_id']) {
+					hideRankitCreatorOptions();
+				}
+				
+				$('.optimal').text("Group Decision:");
+				displayResults();
+				$("#results-ui").show('slow');
+		    },
+		    error: function (jqXHR, textStatus, errorThrown) {
+		        console.log("ERROR: " + jqXHR.responseText);
+		    },
+		    failure: function(result) {
+	            console.log("FAILED");
+	            console.log(result);
+	        }
+		});
+		return "CHYEA";
+	}).fail(function(x) {
+		console.log("Error: " + x);
+	});
 }
 	
+
+
+function loadSubRankit(subId) {
+	$.ajax({
+	    url: 'php/ajax-rankit.php?sub-id=' + subId,
+	    type: 'GET',
+	    dataType: "json",
+	    success: function(data){
+	    	console.log(data);
+	    	id = data['id'];
+	    	username = data['first_name'] + " " + data["last_name"];
+	    	scores = {};
+			title = data['title'];
+			winner = data['winner'];
+			optionList = data['options'].split(',');
+			if (data['no_factors'] == '1') noFactors = true;
+			else noFactors = false;
+			factorNames = data['factor_names'].split(',');
+			factorWeights = data['factor_weights'].split(',');
+			decisions = data['decisions'].split(',');
+			decisionCount = parseInt(data['decision_count']);
+			in_scores = data['scores'].split(',');
+
+			console.log(optionList);
+
+			for (var i = 0; i< optionList.length; i++) {
+				var factorIndex = 0;
+				for (var j=(i*factorNames.length); j<((i+1)*factorNames.length); j++) {
+					var option = optionList[i];
+					var factor = factorNames[factorIndex];
+					var score = in_scores[j];
+					if (scores[option] == undefined) {
+						scores[option] = {};
+					}
+					scores[option][factor] = score;
+					factorIndex++;
+				}
+			}
+			
+			displayGraph();
+			$('.optimal').text(username + "'s Decision:");
+			$('#result').text(winner);
+	    },
+	    error: function (jqXHR, textStatus, errorThrown) {
+	        console.log("ERROR: " + jqXHR.responseText);
+	    },
+	    failure: function(result) {
+            console.log("FAILED");
+            console.log(result);
+        }
+	});
+	return "CHYEA";
+}
+
+
+
+
+/* =====================================
+   _____ __               _            
+  / ___// /_  ____ ______(_)___  ____ _
+  \__ \/ __ \/ __ `/ ___/ / __ \/ __ `/
+ ___/ / / / / /_/ / /  / / / / / /_/ / 
+/____/_/ /_/\__,_/_/  /_/_/ /_/\__, /  
+                              /____/   
+======================================== */
+
+function takeGroupRankit(groupid) {
+	$.ajax({
+	    url: 'php/ajax-rankit.php?take=' + groupid,
+	    type: 'GET',
+	    dataType: "json",
+	    success: function(data){
+	    	console.log(data);
+	    	currentGroupId = data['group_id'];
+			title = data['title'];
+			rankitId = 0;
+			isOwner = 0;
+			optionList = data['options'].split(',');
+			factorNames = data['factor_names'].split(',');
+			factorWeights = data['factor_weights'].split(',');
+
+			$('#option-list').empty();
+			for (var i = 0; i< optionList.length; i++) {
+				$('#option-list').append('<li id="option-item">' + optionList[i] + '</li>');
+			}
+			$('#factor-list').empty();
+			for (var i = 0; i< factorNames.length; i++) {
+				$('#factor-list').append('<li id="factor-item">' + factorNames[i] + '<input type="range" disabled min="0" max="50" step="1" value="' + (parseFloat(factorWeights[i]) * 75) + '" class="factor-slider"></li>');
+			}
+			
+			$('#title-box').val(title);
+			$("#title-box").prop('disabled', true);
+			$('#option-box, #submit-option, #factor-box, #submit-factor').hide();
+	    },
+	    error: function (jqXHR, textStatus, errorThrown) {
+	        console.log("ERROR: " + jqXHR.responseText);
+	    },
+	    failure: function(result) {
+            console.log("FAILED");
+            console.log(result);
+        }
+	});
+	return "CHYEA";
+}

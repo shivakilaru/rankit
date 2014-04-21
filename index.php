@@ -1,59 +1,100 @@
 <?php
 require_once "header.php";
 session_start();
-?>
-	
-	<body>
-		<?php
 
-			if (isset($_GET['id'])){
-				$sql = "SELECT * FROM rankit WHERE id = ".$_GET['id'];
-				$stmt = $pdo->query($sql);
-				while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
+	echo("DEBUGGING - CURRENT USER: ".$_SESSION['loggedIn'].' / '.$_SESSION['user_id']);
+
+	if (isset($_GET['id'])){
+		$id = $_GET['id'];
+		$sql = "SELECT id FROM rankit WHERE id = '".$_GET['id']."'";
+		$stmt = $pdo->query($sql);
+		$output = array();
+		while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			array_push($output, $row);
+		}
+		if ((count($output)) < 1) {
+			echo('<script type="text/javascript">window.location.href = "index.php";</script>'
+			);
+		}
+		else {
+			echo('<script type="text/javascript">
+			$(window).on("load", function() {
+				loadPersonalRankit('.$id.');})
+			</script>'
+			);
+		}
+	}
+
+	else if (isset($_GET['take'])){
+		$groupid = $_GET['take'];
+		$sql = "SELECT id FROM rankit WHERE group_id = '".$_GET['take']."'";
+		$stmt = $pdo->query($sql);
+		$output = array();
+		while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			array_push($output, $row);
+		}
+
+		if ((count($output)) < 1) {
+			echo('<script type="text/javascript">window.location.href = "index.php";</script>'
+			);
+		}
+		else {
+			if ($_SESSION['loggedIn'] == 0) {
+				echo('<script type="text/javascript">window.addEventListener("focus", function(){ location.reload();}); </script>');
+				echo('<div id="login-container">Please <a id="login" onClick="loginClicked();">log in first.</div>');
+				die;
+			}
+			else {
+				$groupid = $_GET['take'];
+				$newsql = "SELECT r.id FROM rankit r, users u WHERE r.user_id = u.id AND u.id = ".$_SESSION['user_id']." AND r.group_id = '".$_GET['take']."'";
+				$newstmt = $pdo->query($newsql);
+				while ($newrow=$newstmt->fetch(PDO::FETCH_ASSOC))
 				{
-					$title = "'".(string)$row["title"]."'";
-					$winner = "'".(string)$row["winner"]."'";
-					$progress_percentage = "'".(string)$row["progress_percentage"]."'";
-					$options = "'".(string)$row["options"]."'";
-					$no_factors = "'".(string)$row["no_factors"]."'";
-					$factor_names = "'".(string)$row["factor_names"]."'";
-					$factor_weights = "'".(string)$row["factor_weights"]."'";
-					$decisions = "'".(string)$row["decisions"]."'";
-					$decision_count = "'".(string)$row["decision_count"]."'";
-					$scores = "'".(string)$row["scores"]."'";
-					$final_scores = "'".(string)$row["final_scores"]."'";
-
+					$takenRankit = $newrow['id'];
+				}
+				if (empty($takenRankit)) {
 					echo('<script type="text/javascript">
 						$(window).on("load", function() {
-							reloadRankit('
-								.$title.','
-								.$winner.','
-								.$progress_percentage.','
-								.$options.','
-								.$no_factors.','
-								.$factor_names.','
-								.$factor_weights.','
-								.$decisions.','
-								.$decision_count.','
-								.$scores.','
-								.$final_scores.');
-						})
-						</script>');
+							takeGroupRankit("'.$groupid.'");})
+						</script>'
+					);
+				}
+				else {
+					// echo(json_encode($takenRankit));
+					echo('<script type="text/javascript">window.location.href = "index.php?id='.$takenRankit.'";</script>');
 				}
 			}
-		?>
+		}
+	}
 
-		<!-- ===== DELETE THIS, ONLY FOR TESTING THE LAST PAGE ==== -->
-		<script type="text/javascript">
-			$(document).ready(function(){
-				// $('#add-ui').hide();
-				// $('#results-ui').show();
-			});
-		</script>
+	else if (isset($_GET['groupid'])){
+		$groupid = $_GET['groupid'];
+		$sql = "SELECT id FROM rankit WHERE group_id = '".$_GET['groupid']."'";
+		$stmt = $pdo->query($sql);
+		$output = array();
+		while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			array_push($output, $row);
+		}
+		if ((count($output)) < 1) {
+			echo('<script type="text/javascript">window.location.href = "index.php";</script>'
+			);
+		}
+		else {
+			echo('<script type="text/javascript">
+				$(window).on("load", function() {
+					loadGroupRankit("'.$groupid.'");})
+				</script>'
+			);
+		}
+	}
+
+?>
+
+
 	
-
-
-
 			<div class="content-container hidden">
 			
 				<!-- Screen 1: "Add UI" -Adding Options and Factors -->
@@ -84,7 +125,6 @@ session_start();
 							<li id="option-item">Squirtle<a class="delete-option"></a></li>
 						</ul>
 
-
 					</div>
 
 					<div class="add-factors">
@@ -109,18 +149,13 @@ session_start();
 
 				</div>
 
-				<div id="footer">
-					<!-- just some cushion whitespace at the bottom.  could add text later -->
-					</br>
-				</div>
-
 
 
 				<!-- Screen 2: "Compare UI" - Comparisons -->
 				<div id="compare-ui">
 
 					<div id= "title-wrapper">
-						<div id="yourRankit">Your Rankit:</div>
+						<div class="title-explanation">Title:</div>
 						<div class="rankitTitle"></div>
 					</div>
 
@@ -157,15 +192,20 @@ session_start();
 				<!-- Screen 3: "Results UI" - Results -->
 				<div id="results-ui">
 					<div id= "title-wrapper">
-						<div id = "yourRankit">Your Rankit:</div>
+						<div class="title-explanation">Title:</div>
 						<div class="rankitTitle"></div>
 					</div>
 
-					<div class = "result-subheading">
-						Optimal Decision:
-					</div>
+					<div class="clear"></div>
 
-					<div id="result">
+					<div id="result-container">
+						<div class = "result-subheading optimal">
+							Optimal Decision:
+						</div>
+						<div id="result">
+						</div>
+						<div id="tiebreaker-disclaimer">
+						</div>
 					</div>
 
 					<div id="certainty-container">
@@ -181,10 +221,9 @@ session_start();
 						</a>
 					</div>
 
-					</br>
-					</br>
+					<div class="clear"></div>
 
-					<div id="tiebreaker-disclaimer">
+					<div id="group-rankit-links">
 					</div>
 
 					<div class="result-subheading">
@@ -194,11 +233,10 @@ session_start();
 					<div id="graph">
 					</div>
 
-					<div id="save-rankit-container">
+					<div class="post-rankit-actions">
 						<div id="save-rankit" class="button" name="save-rankit" value="Save">Save</div>
-						<div id="logInPrompt" hidden>You must login in order to save a RankIt.</div>
+						<div id="share-rankit" class="button" name="share-rankit" value="Share">Share</div>
 					</div>
-					<div id="share-rankit" class="button" name="share-rankit" value="Share">Share</div>
 
 				</div>
 			</div>	

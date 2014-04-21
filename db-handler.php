@@ -9,6 +9,11 @@ echo("<style>body{font-family:sans-serif;}td{padding:10px;}</style>");
 echo('USER ID: '.$_SESSION['user_id']);
 
 
+
+
+
+
+
 /* ===================================================================
    __  __                  ____        __        __                  
   / / / /_______  _____   / __ \____ _/ /_____ _/ /_  ____ _________ 
@@ -62,16 +67,16 @@ echo('<tr>');
 echo('</tr>');
 
 //Display contents of user table
-$stmt = $pdo->query("SELECT * FROM users");
-while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
-{
-	echo('<tr>');
-		echo('<td>'.$row['google_id'].'</td>');
-		echo('<td>'.$row['first_name'].'</td>');
-		echo('<td>'.$row['last_name'].'</td>');
-	echo('</tr>');
-}
-echo('</table>');
+// $stmt = $pdo->query("SELECT * FROM users");
+// while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
+// {
+// 	echo('<tr>');
+// 		echo('<td>'.$row['google_id'].'</td>');
+// 		echo('<td>'.$row['first_name'].'</td>');
+// 		echo('<td>'.$row['last_name'].'</td>');
+// 	echo('</tr>');
+// }
+// echo('</table>');
 
 
 
@@ -86,66 +91,6 @@ echo('</table>');
 /_/ |_|\__,_/_/ /_/_/|_/_/\__/  /_____/\__,_/\__/\__,_/_.___/\__,_/____/\___/ 
                                                                               
 ============================================================================*/
-
-//Check if adding Rankit to database
-
-if (isset($_POST['title']) && 
-	isset($_POST['winner']) && 
-	isset($_POST['progressPercentage']) && 
-	isset($_POST['optionStr']) &&
-	isset($_POST['noFactorsStr']) && 
-	isset($_POST['factorNamesStr']) && 
-	isset($_POST['factorWeightsStr']) && 
-	isset($_POST['decisionsStr']) && 
-	isset($_POST['decisionCount']) && 
-	isset($_POST['scoresStr']) &&
-	isset($_POST['finalScoresStr'])) 
-{
-	//$query_sql = $pdo->query("SELECT id FROM users WHERE id ")
-
-	$sql = 	"INSERT INTO rankit (
-				date, 
-				title, 
-				winner, 
-				progress_percentage, 
-				options,
-				no_factors,
-				factor_names, 
-				factor_weights,
-				decisions,
-				decision_count,
-				scores, 
-				final_scores ) 
-				VALUES (
-					:date, 
-					:title, 
-					:winner, 
-					:progressPercentage, 
-					:options,
-					:no_factors,
-					:factor_names, 
-					:factor_weights,
-					:decisions,
-					:decision_count,
-					:scores, 
-					:final_scores)";
-
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute(array(
-		':date'						=> 	date("Y-m-d H:i:s"),
-		':title'					=> 	$_POST['title'],
-		':winner'					=>	$_POST['winner'],
-		':progressPercentage'		=>	$_POST['progressPercentage'],
-		':options'					=>	$_POST['optionStr'],
-		':no_factors'				=>	$_POST['noFactorsStr'],
-		':factor_names'				=>	$_POST['factorNamesStr'],
-		':factor_weights'			=>	$_POST['factorWeightsStr'],
-		':decisions'				=>	$_POST['decisionsStr'],
-		':decision_count'			=>	$_POST['decisionCount'],
-		':scores'					=>	$_POST['scoresStr'],
-		':final_scores'				=>	$_POST['finalScoresStr']
-	));			
-}
 
 //Create structure of rankit table
 echo('<br/><br/><br/>');
@@ -166,23 +111,23 @@ echo('<tr>');
 echo('</tr>');
 
 //Display contents of rankit table
-$stmt = $pdo->query("SELECT * FROM rankit");
-while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
-{
-	echo('<tr>');
-		echo('<td>'.$row['date'].'</td>');
-		echo('<td>'.$row['title'].'</td>');
-		echo('<td>'.$row['winner'].'</td>');
-		echo('<td>'.$row['progress_percentage'].'</td>');
-		echo('<td>'.$row['option_str'].'</td>');
-		echo('<td>'.$row['factor_names'].'</td>');
-		echo('<td>'.$row['factor_weights'].'</td>');
-		echo('<td>'.$row['decisions'].'</td>');
-		echo('<td>'.$row['decision_count'].'</td>');
-		echo('<td>'.$row['scores'].'</td>');
-		echo('<td>'.$row['final_scores'].'</td>');
-	echo('</tr>');
-}
-echo('</table>');
+// $stmt = $pdo->query("SELECT * FROM rankit");
+// while ($row=$stmt->fetch(PDO::FETCH_ASSOC))
+// {
+// 	echo('<tr>');
+// 		echo('<td>'.$row['date'].'</td>');
+// 		echo('<td>'.$row['title'].'</td>');
+// 		echo('<td>'.$row['winner'].'</td>');
+// 		echo('<td>'.$row['progress_percentage'].'</td>');
+// 		echo('<td>'.$row['option_str'].'</td>');
+// 		echo('<td>'.$row['factor_names'].'</td>');
+// 		echo('<td>'.$row['factor_weights'].'</td>');
+// 		echo('<td>'.$row['decisions'].'</td>');
+// 		echo('<td>'.$row['decision_count'].'</td>');
+// 		echo('<td>'.$row['scores'].'</td>');
+// 		echo('<td>'.$row['final_scores'].'</td>');
+// 	echo('</tr>');
+// }
+// echo('</table>');
 
 ?>
