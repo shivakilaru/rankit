@@ -11,7 +11,10 @@ var rankitId = 0;
 var currentUserID = 0;
 var currentGroupId = 0;
 var isOwner = 1;
+var takingGroupRankit = false;
 
+
+// Rankit ingredients (frontend)
 var title;
 var winnerResult;
 var progressPercentage;
@@ -248,6 +251,10 @@ function loginClicked() {
 		        tokenType = gup(url, 'token_type');
 		        expiresIn = gup(url, 'expires_in');
 		        win.close();
+		        if (takingGroupRankit == true) {
+		        	location.reload();
+		        }
+
 	        	validateToken(acToken);
 	    	}
 		} 

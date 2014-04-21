@@ -36,6 +36,10 @@ session_start();
 			array_push($output, $row);
 		}
 
+		echo('<script type="text/javascript">
+					takingGroupRankit = true; 
+				</script>');
+
 		if ((count($output)) < 1) {
 			echo('<script type="text/javascript">window.location.href = "index.php";</script>'
 			);
@@ -43,13 +47,6 @@ session_start();
 		else {
 			if ($_SESSION['loggedIn'] == 0) {
 				echo('<div id="login-container">Please <a id="login" onClick="loginClicked();">log in first.</div>');
-				echo('<script type="text/javascript">
-					setTimeout(function() {
-						window.addEventListener("focus", function(){ 
-							// location.reload();
-						});
-					},1000); 
-				</script>');
 				die;
 			}
 			else {
