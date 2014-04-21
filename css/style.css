@@ -101,7 +101,8 @@ ul.navigation {
 #decision-factor,
 .choice-container,
 #result,
-.graphLabelgraph {
+.graphLabelgraph,
+.legendLabelgraph {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -396,7 +397,6 @@ ul.navigation {
 	line-height: 100px;
 	max-width: 80%;
 	float: left;
-	margin-left: -4px;
 }
 
 #tiebreaker-disclaimer {
@@ -594,7 +594,8 @@ ul.navigation {
 	font-size: 18px;
 	line-height: 35px;
 	font-weight: 300;
-	padding-left: 40px;
+	margin-left: 10px;
+	width: 67%;
 }
 
 #legendHolder2graph {

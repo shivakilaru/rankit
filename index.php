@@ -42,8 +42,14 @@ session_start();
 		}
 		else {
 			if ($_SESSION['loggedIn'] == 0) {
-				echo('<script type="text/javascript">window.addEventListener("focus", function(){ location.reload();}); </script>');
 				echo('<div id="login-container">Please <a id="login" onClick="loginClicked();">log in first.</div>');
+				echo('<script type="text/javascript">
+					setTimeout(function() {
+						window.addEventListener("focus", function(){ 
+							// location.reload();
+						});
+					},1000); 
+				</script>');
 				die;
 			}
 			else {

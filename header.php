@@ -37,17 +37,14 @@ session_start();
 			</div>
 
 			<ul class="navigation">
-				<a style="float:left;" onClick="fakeLogin();"><li>FakeLogin</li></a>
-				<a style="float:left;" onClick="fakeLogout();"><li>FakeLogout</li></a>
+				<!-- <a style="float:left;" onClick="fakeLogin();"><li>FakeLogin</li></a>
+				<a style="float:left;" onClick="fakeLogout();"><li>FakeLogout</li></a> -->
+				<a id="login" style="float:left;"><li>Login</li></a>
+				<a style="float:left;"><li id="loggedInMessage" style="display:none;"></li></a>
 				<a href="browse.php" style="float:left;"><li>Browse</li></a>
 				<a href="myrankits.php" style="float:left;"><li>My Rankits</li></a>
 				<a href="index.php" style="float:left;"><li>New Rankit</li></a>
 			</ul>
-
-			<div class="login-container">
-				<a id="login">Login</a>
-				<div id="loggedInMessage" hidden></div>
-			</div>
 
 		</div>
 

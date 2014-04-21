@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 
 
 if (isset($_GET['fakeLogin'])){
-	$fake_user_id = 34;
+	$fake_user_id = 31;
 
 	$_SESSION['loggedIn'] = true;
 	$_SESSION['user_id'] = $fake_user_id;
