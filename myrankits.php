@@ -24,8 +24,14 @@ session_start();
 						echo('<ul id="myrankit-list">');
 						while ($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
 							echo('
-								<li class="myrankit-item">
-								<a href="index.php?id='.$row['id'].'"><div class="myrankit-title">'.$row['title'].'</div></a>
+								<li class="myrankit-item">');
+							if ($row['group_id'] != 0) {
+								echo('<a href="index.php?groupid='.$row['group_id'].'"><div class="myrankit-title">'.$row['title'].'</div></a>');
+							}
+							else {
+								echo('<a href="index.php?id='.$row['id'].'"><div class="myrankit-title">'.$row['title'].'</div></a>');
+							}
+							echo('
 								<div class="myrankit-decision"><span>Decision: </span>
 								<span class ="user-decision">'.$row['winner'].'</span></div>
 								<div class="myrankit-certainty"><span>Certainty: </span>
