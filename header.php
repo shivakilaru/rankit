@@ -40,6 +40,7 @@ session_start();
 				<!-- <a style="float:left;" onClick="fakeLogin();"><li>FakeLogin</li></a>
 				<a style="float:left;" onClick="fakeLogout();"><li>FakeLogout</li></a> -->
 				<a id="login" style="float:left;"><li>Login</li></a>
+				<!-- <a style="float:right;" id="logout" href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://shivakilaru.com/rankit/"><li>Log Out</li></a> -->
 				<a style="float:left;"><li id="loggedInMessage" style="display:none;"></li></a>
 				<a href="browse.php" style="float:left;"><li>Browse</li></a>
 				<a href="myrankits.php" style="float:left;"><li>My Rankits</li></a>

@@ -123,6 +123,10 @@ ul.navigation {
 	margin-top: 30px;
 }
 
+.explanation {
+	font-size: 16px;
+}
+
 #title, #options, #factors {
 	margin-bottom: 8px;
 }
@@ -148,6 +152,7 @@ ul.navigation {
 	max-width: 88%;
 	font-family: "Helvetica", "Arial", sans-serif;
 	background-color: #E0E0E0;
+	color: #888;
 	border: none;
 	border-radius: 4px;
 	padding: 10px;
@@ -666,25 +671,33 @@ ul.navigation {
 }
 
 #myrankit-list{
-	width: 800px;
+	width: 100%;
 	margin: 0 auto; 
 	padding: 10px;
 	background-color: #e0e0e0;
 	border-radius: 10px;
 }
 
+:not(.myrankit-item:first-child) {
+	background: blue;
+}
+
+.myrankit-item {
+	padding: 20px 0;
+}
+
 .myrankit-title{
-	font-size: 16px;
+	font-size: 20px;
 	font-weight: bold;
 }
 
 .myrankit-decision{
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: 300;
 }
 
 .myrankit-certainty{
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: 300;
 }
 

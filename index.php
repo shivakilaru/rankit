@@ -2,7 +2,7 @@
 require_once "header.php";
 session_start();
 
-	echo("DEBUGGING - CURRENT USER: ".$_SESSION['loggedIn'].' / '.$_SESSION['user_id']);
+	// echo("DEBUGGING - CURRENT USER: ".$_SESSION['loggedIn'].' / '.$_SESSION['user_id']);
 
 	if (isset($_GET['id'])){
 		$id = $_GET['id'];
@@ -46,8 +46,9 @@ session_start();
 		}
 		else {
 			if ($_SESSION['loggedIn'] == 0) {
-				echo('<div id="login-container">Please <a id="login" onClick="loginClicked();">log in first.</div>');
-				die;
+				echo('<script type="text/javascript">currentGroupId = "'.$groupid.'";</script>');
+				echo('<style>#add-ui{display:none;}</style>');
+				echo('<div id="login-container">Please <a id="login" onClick="loginClicked();">log in</a> first.</div>');
 			}
 			else {
 				$groupid = $_GET['take'];
@@ -109,7 +110,7 @@ session_start();
 
 					<div class="get-title">
 						<h2 id="title">Name Your Decision</h2>
-						<input type="text" id="title-box" maxlength=44 name="title" />
+						<input type="text" id="title-box" maxlength=44 name="title" value="Best Car" onfocus="if (this.value == 'Best Car') {this.value = '';$(this).css('color', '#333');}"/>
 
 					</div>
 
@@ -117,7 +118,7 @@ session_start();
 
 						<h2 id="options">Options</h2>
 
-						<input type="text" id="option-box" name="option"/>
+						<input type="text" id="option-box" name="option" value="i.e. Honda, Chevrolet, Ford" onfocus="if (this.value == 'i.e. Honda, Chevrolet, Ford') {this.value = '';$(this).css('color', '#333');}"/>
 						<a id="submit-option"></a>
 
 						<h4 class="list-header">Current List</h4>
@@ -130,7 +131,7 @@ session_start();
 
 						<h2 id="factors">Factors</h2>
 
-						<input type="text" id="factor-box" name="factor"/>
+						<input type="text" id="factor-box" name="factor" value="i.e. Gas Mileage, Price, Luxury" onfocus="if (this.value == 'i.e. Gas Mileage, Price, Luxury') {this.value = '';$(this).css('color', '#333');}"/>
 						<a id="submit-factor"></a>
 
 						<h4 class="list-header">Current List</h4>

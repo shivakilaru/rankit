@@ -252,7 +252,7 @@ function loginClicked() {
 		        expiresIn = gup(url, 'expires_in');
 		        win.close();
 		        if (takingGroupRankit == true) {
-		        	location.reload();
+		        	takeGroupRankit(currentGroupId);
 		        }
 
 	        	validateToken(acToken);
@@ -335,7 +335,7 @@ function fakeLogin() {
 	    type: 'GET',
 	    dataType: "json",
 	    success: function(resp) {
-        	alert(resp);
+        	// alert(resp);
       },
 	});
 }
@@ -358,7 +358,7 @@ function checkIfLoggedIn() {
 	    dataType: "json",
 	    success: function(resp) {
 	    	currentUserID = resp;
-        	alert(resp);
+        	// alert(resp);
         }
 	});
 }
@@ -1126,6 +1126,7 @@ function loadSubRankit(subId) {
 ======================================== */
 
 function takeGroupRankit(groupid) {
+	$('#add-ui').hide();
 	$.ajax({
 	    url: 'php/ajax-rankit.php?take=' + groupid,
 	    type: 'GET',
@@ -1152,6 +1153,8 @@ function takeGroupRankit(groupid) {
 			$('#title-box').val(title);
 			$("#title-box").prop('disabled', true);
 			$('#option-box, #submit-option, #factor-box, #submit-factor').hide();
+			$('#login-container').hide();
+			$('#add-ui').show();
 	    },
 	    error: function (jqXHR, textStatus, errorThrown) {
 	        console.log("ERROR: " + jqXHR.responseText);
