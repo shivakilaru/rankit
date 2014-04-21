@@ -11,7 +11,10 @@ var rankitId = 0;
 var currentUserID = 0;
 var currentGroupId = 0;
 var isOwner = 1;
+var takingGroupRankit = false;
 
+
+// Rankit ingredients (frontend)
 var title;
 var winnerResult;
 var progressPercentage;
@@ -248,6 +251,10 @@ function loginClicked() {
 		        tokenType = gup(url, 'token_type');
 		        expiresIn = gup(url, 'expires_in');
 		        win.close();
+		        if (takingGroupRankit == true) {
+		        	location.reload();
+		        }
+
 	        	validateToken(acToken);
 	    	}
 		} 
@@ -278,7 +285,7 @@ function getUserInfo() {
          user    =   resp;
          console.log(user);
          addUserToDB(user);
-			setLoggedIn();
+		setLoggedIn(user.given_name);
           //$('#imgHolder').attr('src', user.picture);
       },
       dataType: "jsonp"
@@ -350,9 +357,9 @@ function checkIfLoggedIn() {
 	    type: 'GET',
 	    dataType: "json",
 	    success: function(resp) {
+	    	currentUserID = resp;
         	alert(resp);
         }
-
 	});
 }
 
@@ -799,64 +806,69 @@ function createId()
 // Save to DB via POST without reloading page
 function saveCurrentRankit() {
 	// Convert Rankit variables to strings for storage in DB.
-	var optionStr = optionList.toString();
-	var noFactorsStr = noFactors ? 1 : 0;
-	var factorNamesStr = factorNames.toString();
-	var factorWeightsStr = factorWeights.toString();
-	var decisionsStr = decisions.toString();
-	var scoresStr = '';
-	var finalScoresStr = '';
-	
-	for (var i = 0; i < optionList.length; ++i) {
-		for ( var j = 0; j < factorNames.length; ++j) {
-			scoresStr += scores[optionList[i]][factorNames[j]] + ',';
+	checkIfLoggedIn().done(function(loggedInStatus) {
+		var optionStr = optionList.toString();
+		var noFactorsStr = noFactors ? 1 : 0;
+		var factorNamesStr = factorNames.toString();
+		var factorWeightsStr = factorWeights.toString();
+		var decisionsStr = decisions.toString();
+		var scoresStr = '';
+		var finalScoresStr = '';
+		console.log("user id: " + currentUserID);
+		
+		for (var i = 0; i < optionList.length; ++i) {
+			for ( var j = 0; j < factorNames.length; ++j) {
+				scoresStr += scores[optionList[i]][factorNames[j]] + ',';
+			}
+			finalScoresStr += finalScores[optionList[i]] + ',';
 		}
-		finalScoresStr += finalScores[optionList[i]] + ',';
-	}
 
-	scoresStr = scoresStr.substring(0,scoresStr.length-1);
-	finalScoresStr = finalScoresStr.substring(0,finalScoresStr.length-1); 
+		scoresStr = scoresStr.substring(0,scoresStr.length-1);
+		finalScoresStr = finalScoresStr.substring(0,finalScoresStr.length-1); 
 
-	// Store important variables to recreate Rankit
-	var vars = 	'id='+rankitId+
-				'&userId='+currentUserID+
-				'&title='+title+
-				'&groupId='+currentGroupId+
-				'&isOwner='+isOwner+
-				'&winner='+winnerResult+
-				'&progressPercentage='+progressPercentage+
-				'&optionStr='+optionStr+
-				'&noFactorsStr='+noFactorsStr+
-				'&factorNamesStr='+factorNamesStr+
-				'&factorWeightsStr='+factorWeightsStr+
-				'&decisionsStr='+decisionsStr+
-				'&decisionCount='+decisionCount+
-				'&scoresStr='+scoresStr+
-				'&finalScoresStr='+finalScoresStr;
+		// Store important variables to recreate Rankit
+		var vars = 	'id='+rankitId+
+					'&userId='+currentUserID+
+					'&title='+title+
+					'&groupId='+currentGroupId+
+					'&isOwner='+isOwner+
+					'&winner='+winnerResult+
+					'&progressPercentage='+progressPercentage+
+					'&optionStr='+optionStr+
+					'&noFactorsStr='+noFactorsStr+
+					'&factorNamesStr='+factorNamesStr+
+					'&factorWeightsStr='+factorWeightsStr+
+					'&decisionsStr='+decisionsStr+
+					'&decisionCount='+decisionCount+
+					'&scoresStr='+scoresStr+
+					'&finalScoresStr='+finalScoresStr;
 
-	console.log(vars);
-	console.log("ID is " + rankitId);
+		console.log(vars);
+		console.log("ID is " + rankitId);
 
-	$.ajax({
-	    url: 'php/ajax-rankit.php',
-	    data: vars,
-	    cache: false,
-	    type: 'POST',
-	    // dataType: "json",
-        contentType: 'application/x-www-form-urlencoded, charset=utf-8',
-	    success: function(data){
-	 		window.console && console.log("POST success"); 
-	    	window.console && console.log(data);
-	    	// window.location.href = 'browse.php';
-	    },
-	    error: function (jqXHR, textStatus, errorThrown) {
-	        console.log("ERROR: " + jqXHR.responseText);
-	    },
-	    failure: function(result) {
-            console.log("FAILED");
-            console.log(result);
-        }
-	  });
+		$.ajax({
+		    url: 'php/ajax-rankit.php',
+		    data: vars,
+		    cache: false,
+		    type: 'POST',
+		    // dataType: "json",
+	        contentType: 'application/x-www-form-urlencoded, charset=utf-8',
+		    success: function(data){
+		 		window.console && console.log("POST success"); 
+		    	window.console && console.log(data);
+		    	// window.location.href = 'browse.php';
+		    },
+		    error: function (jqXHR, textStatus, errorThrown) {
+		        console.log("ERROR: " + jqXHR.responseText);
+		    },
+		    failure: function(result) {
+	            console.log("FAILED");
+	            console.log(result);
+	        }
+		  });
+	}).fail(function(x) {
+		console.log("Error: " + x);
+	});
 }
 
 
