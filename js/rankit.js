@@ -376,17 +376,17 @@ function addItem(type) {
 
 		if (type == "option") {
 			$('#option-list').prepend(
-				"<li id='option-item'>" + item + 
-						"<a class='delete-option'></a>" + 
-					"</li>"
+				"<li id='option-item'>" + "<A class='opt-name'>" + item + "</A>"+ 
+					"<a class='delete-option'></a>" + 
+				"</li>"
 			);
 		}
 		if (type == "factor") {
 			$('#factor-list').prepend(
-				"<li id='factor-item'>" + item + 
-						"<a class='delete-factor'></a>" + 
-						"<input type='range' min='0' max='50' step='1' value='25' class='factor-slider'/>" +
-					"</li>"
+				"<li id='factor-item'>" + "<A class='fact-name'>" + item + "</A>" + 
+					"<a class='delete-factor'></a>" + 
+					"<input type='range' min='0' max='50' step='1' value='25' class='factor-slider'/>" +
+				"</li>"
 			);
 		}
 
@@ -472,7 +472,7 @@ function beginDeciding() {
 		for (f in factorNames) {
 			var factor = factorNames[f];
 			// OLD: scores[option][factor] = 500;
-			scores[option][factor] = .3; //makes it so there is always a graph for every option
+			scores[option][factor] = .01; //makes it so there is always a graph for every option
 			console.log(option + " in " + factor + ": " + scores[option][factor]);
 		}
 	}

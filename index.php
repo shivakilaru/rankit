@@ -101,13 +101,12 @@ session_start();
 				<div id="add-ui">
 
 					<div class="explanation">
-						Rankit helps you make a decision. On the left, enter the options you’re trying to decide between, and on the right, enter the factors you’re judging them by. Weight the factors if necessary. Then press “Rank!”
+						Rankit helps you make a decision. First, give your decision a name. Then under "Options," enter the choices you’re trying to decide between. Under "Factors," enter attributes to compare your options by. Weight each attribute by it's importance to you. Then press “Rank!”
 					</div>
 
 					<div class="get-title">
-						<h2 id="title">Title</h2>
-						<input type="text" id="title-box" maxlength=44 name="title" value=
-						"Pokemon"/>
+						<h2 id="title">Name Your Decision</h2>
+						<input type="text" id="title-box" maxlength=44 name="title" />
 
 					</div>
 
@@ -120,9 +119,6 @@ session_start();
 
 						<h4 class="list-header">Current List</h4>
 						<ul id="option-list">
-							<li id="option-item">Charmander<a class="delete-option"></a></li>
-							<li id="option-item">Bulbasaur<a class="delete-option"></a></li>
-							<li id="option-item">Squirtle<a class="delete-option"></a></li>
 						</ul>
 
 					</div>
@@ -136,15 +132,16 @@ session_start();
 
 						<h4 class="list-header">Current List</h4>
 						<ul id="factor-list">
-							<li id="factor-item">Speed<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
-							<li id="factor-item">Defense<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
-							<li id="factor-item">Attack<a class="delete-factor"></a><input type="range" min="0" max="50" step="1" value="25" class="factor-slider"></li>
 						</ul>
 
 					</div>
 
 					<div id="go-rank" class="clickable button">
 						Rank!
+					</div>
+
+					<div id="footer">
+						</br>
 					</div>
 
 				</div>

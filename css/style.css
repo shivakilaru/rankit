@@ -188,6 +188,20 @@ ul.navigation {
 	display: block;
 }
 
+#option-list > li .opt-name {
+	float: left;
+	max-width: 350px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#factor-list > li .fact-name {
+	float: left;
+	max-width: 200px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .delete-option, .delete-factor {
 	display: none;
 	position: absolute;
@@ -396,7 +410,7 @@ ul.navigation {
 	line-height: 100px;
 	max-width: 80%;
 	float: left;
-	margin-left: -4px;
+	margin-left: 10px;
 }
 
 #tiebreaker-disclaimer {
@@ -594,7 +608,9 @@ ul.navigation {
 	font-size: 18px;
 	line-height: 35px;
 	font-weight: 300;
-	padding-left: 40px;
+	padding-left: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #legendHolder2graph {
