@@ -4,6 +4,13 @@ session_start();
 
 	// echo("DEBUGGING - CURRENT USER: ".$_SESSION['loggedIn'].' / '.$_SESSION['user_id']);
 
+	echo('<script type="text/javascript">
+				$(document).ready( function() {
+					mixpanel.track("Index loaded");
+				});
+				</script>'
+			);
+
 	if (isset($_GET['id'])){
 		$id = $_GET['id'];
 		$sql = "SELECT id FROM rankit WHERE id = '".$_GET['id']."'";

@@ -1,0 +1,76 @@
+/* Rankit Project */
+/* EECS 493 W'14 */
+
+body {
+	transition: all 0.7s;
+  	-webkit-transition: all 0.7s;
+}
+
+.container {
+	width: 840px;
+	margin: 60px auto;
+	transition: all 0.7s;
+  	-webkit-transition: all 0.7s;
+}
+
+.animation-container {
+	transition: all 0.7s;
+  	-webkit-transition: all 0.7s;
+  	margin-top: 0px;
+  	opacity: 1;
+}
+
+.animation-container.hidden {
+	opacity: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
+}
+
+.demo-gif {
+	box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+#logo {
+	font-size: 180px;
+	margin: -85px 0 -60px -13px;
+	letter-spacing: -7px;
+	-webkit-user-select: none;
+	color: #444;
+	transition: all 0.7s;
+  	-webkit-transition: all 0.7s;
+}
+
+#logo.hidden {
+	margin: -105px 0 -60px -13px;
+	opacity: 0;
+}
+
+.about-paragraph {
+	font-weight: 300;
+	font-size: 1.5em;
+	margin: 25px auto;
+}
+
+
+/* mobile */
+@media screen and (max-width : 568px) {
+	#logo {
+		font-size: 7em;
+		margin: -40px 0 -10px -5px;
+		letter-spacing: -4px;
+	}
+	.container {
+		width: 95%;
+		margin: 60px auto;
+	}
+	.about-paragraph {
+		font-size: 1.5em;
+	}	
+	.demo-gif {
+		width: 100%;
+	}
+}

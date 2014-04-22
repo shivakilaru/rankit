@@ -670,12 +670,19 @@ ul.navigation {
 	font-weight: 300;
 }
 
+.myRankitHeader {
+	margin: 10px 0 5px 20px;
+	font-size: 24px;
+	font-weight: 300;
+}
+
 #myrankit-list{
 	width: 100%;
 	margin: 0 auto; 
 	padding: 10px;
 	background-color: #e0e0e0;
 	border-radius: 10px;
+	margin-bottom: 15px;
 }
 
 :not(.myrankit-item:first-child) {
@@ -684,6 +691,7 @@ ul.navigation {
 
 .myrankit-item {
 	padding: 20px 0;
+	margin-left: 20px;
 }
 
 .myrankit-title{
