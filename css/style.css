@@ -412,10 +412,9 @@ ul.navigation {
 	font-size: 90px;
 	font-weight: 900;
 	color: #686868;
-	line-height: 100px;
+	line-height: 105px;
 	max-width: 80%;
 	float: left;
-	margin-left: 10px;
 }
 
 #tiebreaker-disclaimer {
@@ -615,6 +614,7 @@ ul.navigation {
 	font-weight: 300;
 	padding-left: 10px;
 	overflow: hidden;
+	width: 67%;
 	text-overflow: ellipsis;
 }
 

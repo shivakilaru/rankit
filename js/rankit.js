@@ -12,7 +12,7 @@ var currentUserID = 0;
 var currentGroupId = 0;
 var isOwner = 1;
 var takingGroupRankit = false;
-
+var hasSaved = false;
 
 // Rankit ingredients (frontend)
 var title;
@@ -270,6 +270,7 @@ function validateToken(token) {
       success: function(responseText){  
           getUserInfo();
           loggedIn = true;
+
           // $('#loginText').hide();
           // $('#logoutText').show();
       },  
@@ -845,27 +846,34 @@ function saveCurrentRankit() {
 
 		console.log(vars);
 		console.log("ID is " + rankitId);
+		console.log("hasSaved: " + hasSaved);
 
-		$.ajax({
-		    url: 'php/ajax-rankit.php',
-		    data: vars,
-		    cache: false,
-		    type: 'POST',
-		    // dataType: "json",
-	        contentType: 'application/x-www-form-urlencoded, charset=utf-8',
-		    success: function(data){
-		 		window.console && console.log("POST success"); 
-		    	window.console && console.log(data);
-		    	// window.location.href = 'browse.php';
-		    },
-		    error: function (jqXHR, textStatus, errorThrown) {
-		        console.log("ERROR: " + jqXHR.responseText);
-		    },
-		    failure: function(result) {
-	            console.log("FAILED");
-	            console.log(result);
-	        }
-		  });
+		if(!((hasSaved == true) && (rankitId == 0))) {
+			$.ajax({
+			    url: 'php/ajax-rankit.php',
+			    data: vars,
+			    cache: false,
+			    type: 'POST',
+			    // dataType: "json",
+		        contentType: 'application/x-www-form-urlencoded, charset=utf-8',
+			    success: function(data){
+			 		window.console && console.log("POST success"); 
+			    	window.console && console.log(data);
+			    	hasSaved = true;
+			    	// window.location.href = 'browse.php';
+			    },
+			    error: function (jqXHR, textStatus, errorThrown) {
+			        console.log("ERROR: " + jqXHR.responseText);
+			    },
+			    failure: function(result) {
+		            console.log("FAILED");
+		            console.log(result);
+		        }
+			  });
+		}
+		else {
+
+		}
 	}).fail(function(x) {
 		console.log("Error: " + x);
 	});

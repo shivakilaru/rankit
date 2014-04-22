@@ -2,7 +2,7 @@
 require_once "header.php";
 session_start();
 
-	//$user = $stmt->fetch(PDO::FETCH_ASSOC);
+	$groupIdList = array();
 ?>
 	
 	
@@ -22,7 +22,13 @@ session_start();
 
 					else {
 						echo('<ul id="myrankit-list">');
+						echo('<h2>Individual RankIts</h2>');
 						while ($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+							
+							//Search for GroupRankIts while iterating through RankIts
+							$GroupSearchSQL = "SELECT * FROM rankit WHERE group_id = ".$row['group_id'].";";
+							// if ($GroupSearchSQL)
+
 							echo('
 								<li class="myrankit-item">');
 							if ($row['group_id'] != 0) {
@@ -40,6 +46,9 @@ session_start();
 								');
 						}
 						echo('</ul>');
+					
+						//Check for Group RankIts
+						//if
 					}
 
 				?>
