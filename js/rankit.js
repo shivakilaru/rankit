@@ -903,6 +903,7 @@ function loadPersonalRankit(id) {
 		    success: function(data){
 		    	console.log(data);
 		    	rankitId = data['id'];
+		    	currentGroupId = data['group_id'];
 		    	scores = {};
 				title = data['title'];
 				winner = data['winner'];

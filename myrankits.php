@@ -31,12 +31,12 @@ session_start();
 
 							echo('
 								<li class="myrankit-item">');
-							if ($row['group_id'] != 0) {
-								echo('<a href="index.php?groupid='.$row['group_id'].'"><div class="myrankit-title">'.$row['title'].'</div></a>');
-							}
-							else {
+							// if ($row['group_id'] != 0) {
+							// 	echo('<a href="index.php?groupid='.$row['group_id'].'"><div class="myrankit-title">'.$row['title'].'</div></a>');
+							// }
+							// else {
 								echo('<a href="index.php?id='.$row['id'].'"><div class="myrankit-title">'.$row['title'].'</div></a>');
-							}
+							// }
 							echo('
 								<div class="myrankit-decision"><span>Decision: </span>
 								<span class ="user-decision">'.$row['winner'].'</span></div>
